@@ -1,0 +1,69 @@
+# Client files
+local-image.*
+test-image.*
+
+# Auto-generated files
+uploads
+log*.txt
+*.log
+
+# Unused & temp files
+package-lock.json
+\!UNUSED
+~*
+*_
+zia*
+*.sw?
+*~
+\!ARC*
+*.session
+
+# Include special jest files/folders
+!__mocks__
+!__snapshots__
+!__tests__
+
+# dependencies
+/node_modules
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+cam-client-app-build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+config.local.yml

@@ -1,0 +1,30 @@
+{
+  "name": "cam-rpi-server-2202",
+  "demo-server": "http://cam.lilliputten.ru/",
+  "version": "0.0.1",
+  "timetag": "220203-0238",
+  "timestamp": "2022.02.03, 02:38",
+  "changed": "2022.01.22, 19:55",
+  "changed": "2022.02.06, 23:10",
+  "private": true,
+  "author": "lilliputten <igor@lilliputten.ru>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/lilliputten/cam-server"
+  },
+  "devDependencies": {
+    "dateformat": "^3.0.3",
+    "npm-package-user-scripts-list": "^0.1.10",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "postinstall-cam-client-app-build": "echo --Install publish submodule (posix commands used)-- && sh ./utils/cam-client-app-build-init.sh",
+    "postinstall-venv-init": "echo --Install publish submodule (posix commands used)-- && sh ./utils/venv-init.sh",
+    "postinstall-UNUSED": "echo --Run postinstall tasks-- && npm-run-all postinstall-cam-client-app-build postinstall-venv-init",
+    "increment-version": "echo --Increment patch version-- && node util-increment-version.js",
+    "update-build-time": "echo --Update build timestamp-- && node util-update-build-time.js",
+    "update-build-variables": "echo --Update build properties-- && sh util-update-build-variables.sh",
+    "help": "echo --List all available script commands-- && npm-package-user-scripts-list"
+  }
+}

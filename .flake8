@@ -1,0 +1,3 @@
+[flake8]
+max-line-length = 999
+/* https://flake8.pycqa.org/en/2.6.0/warnings.html */
