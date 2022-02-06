@@ -10,7 +10,9 @@
 
 ## API
 
-Basic api structure (server v.0.0.5+):
+Basic api structure:
+
+TODO: Describe api (for specific server version)
 
 
 ## Server
@@ -31,7 +33,7 @@ Camera shots are taken using the `raspistill` program using commands like:
 raspistill -o image.jpg
 # Half:
 raspistill -w 1296 -h 972 -o image-half.jpg
-# Half:
+# Quarter:
 raspistill -w 648 -h 486 -o image-quarter.jpg
 ```
 
