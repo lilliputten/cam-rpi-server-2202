@@ -9,22 +9,17 @@
 
 from os import path
 import json
-import yaml
+#  import yaml
 import sys
 
-pytonVersion = sys.version
+from config_helpers import updateConfigWithYaml, readFiletoString
+
+pythonVersion = sys.version
 
 rootPath = path.dirname(path.abspath(__file__))  # Project root path
 
 yamlConfigFilename = path.join(rootPath, 'config.yml')
 yamlLocalConfigFilename = path.join(rootPath, 'config.local.yml')
-
-buildVersionFilename = path.join(rootPath, 'build-version.txt')
-buildTagFilename = path.join(rootPath, 'build-tag.txt')
-timestampFilename = path.join(rootPath, 'build-timestamp.txt')
-timetagFilename = path.join(rootPath, 'build-timetag.txt')
-packageFilename = path.join(rootPath, 'package.json')
-#  print 'config: packageFilename', packageFilename  # DEBUG
 
 uploadPath = path.join(rootPath, 'uploads')
 
@@ -32,24 +27,20 @@ uploadPath = path.join(rootPath, 'uploads')
 #  clientTemplatePath = path.join(rootPath, 'cam-client-app-build')
 #  clientStaticPath = path.join(clientTemplatePath, 'static')
 
+# Generate/read build parameters (version, timetag etc)
+# Default values (empty)...
 version = ''
 timestamp = ''
 timetag = ''
 buildTag = ''
-
-
-def readFiletoString(file):
-    """
-    Read text string from file
-    """
-    if path.isfile(file):
-        with open(file) as fh:
-            #  print 'Extending config with', file
-            data = fh.read().strip()
-            fh.close()
-            return data
-
-
+# Filenames...
+buildVersionFilename = path.join(rootPath, 'build-version.txt')
+buildTagFilename = path.join(rootPath, 'build-tag.txt')
+timestampFilename = path.join(rootPath, 'build-timestamp.txt')
+timetagFilename = path.join(rootPath, 'build-timetag.txt')
+packageFilename = path.join(rootPath, 'package.json')
+#  print 'config: packageFilename', packageFilename  # DEBUG
+# Read version...
 if path.isfile(buildVersionFilename):
     version = readFiletoString(buildVersionFilename)
 elif path.isfile(packageFilename):
@@ -57,12 +48,12 @@ elif path.isfile(packageFilename):
     pkgConfig = json.load(pkgConfigFile)
     version = pkgConfig['version'].encode('ascii')
     pkgConfigFile.close()
-
+# Read timestamp/timetag...
 if path.isfile(timestampFilename):
     timestamp = readFiletoString(timestampFilename)
 if path.isfile(timetagFilename):
     timetag = readFiletoString(timetagFilename)
-
+# Read/generate buildTag...
 if version and timetag:
     buildTag = 'v.' + version + '-' + timetag
 elif path.isfile(buildTagFilename):
@@ -72,7 +63,7 @@ config = {  # Default config
 
     # Application parameters...
 
-    'pytonVersion': pytonVersion,
+    'pythonVersion': pythonVersion,
     'version': version,
     'timestamp': timestamp,
     'timetag': timetag,
@@ -128,20 +119,9 @@ config = {  # Default config
 }
 
 
-def updateConfigWithYaml(config, file):
-    """
-    Extend config from file
-    """
-    if path.isfile(file):
-        with open(file) as file:
-            #  print 'Extending config with', file
-            yamlConfigData = yaml.load(file, Loader=yaml.FullLoader)
-            #  print 'yamlConfigData:', yamlConfigData
-            config.update(yamlConfigData)
-
-
 updateConfigWithYaml(config, yamlConfigFilename)
 updateConfigWithYaml(config, yamlLocalConfigFilename)
 
-print('Config:', config)
-print('Done')
+#  #  DEBUG
+#  print('Config:', config)
+#  print('Done')
