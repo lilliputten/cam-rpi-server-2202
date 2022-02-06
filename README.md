@@ -1,3 +1,7 @@
+<!--
+ @changed 2022.02.07, 00:35
+-->
+
 # Cam flask photo receiver server & raspberry camera client
 
 
@@ -23,6 +27,13 @@ TODO: Describe basic server functionality.
 
 TODO: Preserve capability to implement public server (with same or like functinal?)
 
+
+## Python dependencies
+
+```
+pip install PKGNAME
+pip freeze > requirements-frozen.txt
+```
 
 ## Camera interface
 
@@ -103,7 +114,3 @@ Or use output reirect in command:
 python /home/pi/cam-client/client-make-image.py >>  /home/pi/cam-client/cron.log 2>&1
 ```
 
-
-<!--
- @changed 2022.02.06, 23:15
--->

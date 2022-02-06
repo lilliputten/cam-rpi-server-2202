@@ -6,6 +6,11 @@
 # See:
 #  - https://docs.python.org/3/library/configparser.html -- ???
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
+#  - https://flask.palletsprojects.com/en/2.0.x/config/
+
+"""
+Config module
+"""
 
 from os import path
 import json
@@ -23,9 +28,9 @@ yamlLocalConfigFilename = path.join(rootPath, 'config.local.yml')
 
 uploadPath = path.join(rootPath, 'uploads')
 
-#  # Build params...
-#  clientTemplatePath = path.join(rootPath, 'cam-client-app-build')
-#  clientStaticPath = path.join(clientTemplatePath, 'static')
+# Build params...
+clientTemplatePath = path.join(rootPath, 'cam-client-app-build')
+clientStaticPath = path.join(clientTemplatePath, 'static')
 
 # Generate/read build parameters (version, timetag etc)
 # Default values (empty)...
@@ -39,7 +44,7 @@ buildTagFilename = path.join(rootPath, 'build-tag.txt')
 timestampFilename = path.join(rootPath, 'build-timestamp.txt')
 timetagFilename = path.join(rootPath, 'build-timetag.txt')
 packageFilename = path.join(rootPath, 'package.json')
-#  print 'config: packageFilename', packageFilename  # DEBUG
+#  print('config: packageFilename', packageFilename  # DEBUG)
 # Read version...
 if path.isfile(buildVersionFilename):
     version = readFiletoString(buildVersionFilename)
@@ -74,10 +79,10 @@ config = {  # Default config
     'rootPath': rootPath,
     'uploadPath': uploadPath,
 
-    #  # Generated client path (see `cam-client-app-build`, TODO?)
-    #
-    #  'clientStaticPath': clientStaticPath,
-    #  'clientTemplatePath': clientTemplatePath,
+    # Generated client path (see `cam-client-app-build`, TODO?)
+
+    'clientStaticPath': clientStaticPath,
+    'clientTemplatePath': clientTemplatePath,
 
     # Image parameters...
     #
