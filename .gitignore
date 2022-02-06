@@ -8,7 +8,6 @@ log*.txt
 *.log
 
 # Unused & temp files
-package-lock.json
 \!UNUSED
 ~*
 *_

@@ -1,6 +1,6 @@
 #!/bin/sh
 # @desc Increment version number
-# @changed 2021.11.17, 22:25
+# @changed 2022.02.06, 23:20
 
 # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
 test -f "./utils/util-config.sh" && . "./utils/util-config.sh"
@@ -38,7 +38,7 @@ cp "$VERSION_FILE" "$BACKUP" \
   && echo "Updated version: `cat $VERSION_FILE`" \
   && sh "./utils/update-build-variables.sh" \
   && VERSION=`cat "$VERSION_FILE"` \
-  && echo "Don't forget to update version for target project dependency (package.json, WebUiCore entry)"
+  && echo "Don't forget to update version for target project dependency (if used)"
 
   # UNUSED
   # && echo "Create version tag ($VERSION) in dist repository ($PUBLISH_FOLDER)" \
