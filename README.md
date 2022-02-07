@@ -8,8 +8,8 @@
 ## Build info (auto-generated)
 
 - Version: 0.0.1
-- Last changes timestamp: 2022.02.06, 23:20
-- Last changes timetag: 220206-2320
+- Last changes timestamp: 2022.02.07, 03:24
+- Last changes timetag: 220207-0324
 
 
 ## API
@@ -17,6 +17,11 @@
 Basic api structure:
 
 TODO: Describe api (for specific server version)
+
+
+## Server urls
+
+Remote server: `http://cam-rpi-server.lilliputten.ru/`
 
 
 ## Server
@@ -28,11 +33,28 @@ TODO: Describe basic server functionality.
 TODO: Preserve capability to implement public server (with same or like functinal?)
 
 
+## Python venv maintenance
+
+Server command for creating venv:
+
+```
+virtualenv -p python3 ~/.venv-py3-flask
+source ~/.venv-py3-flask/bin/activate
+pip install -r requirements.txt
+```
+
+Local script for venv creating and initialization:
+
+```
+sh utils/util-venv-init.sh
+```
+
 ## Python dependencies
 
 ```
 pip install PKGNAME
 pip freeze > requirements-frozen.txt
+pip install -r requirements.txt
 ```
 
 ## Camera interface

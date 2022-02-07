@@ -1,6 +1,7 @@
 <!--
-@changed 2022.02.06, 23:02
+@changed 2022.02.07, 03:24
 -->
 
 # Changelog
 
+- 2022.02.07, 03:24 -- Readme venv instructions, disable basic auth in htaccess.
