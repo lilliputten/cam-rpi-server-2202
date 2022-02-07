@@ -4,7 +4,7 @@
 # @changed 2022.02.07, 00:27
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-#  import pathmagic  # noqa
+import pathmagic  # noqa
 
 import os
 
