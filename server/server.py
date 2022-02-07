@@ -4,11 +4,10 @@
 # @changed 2022.02.07, 00:27
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-#  import .pathmagic  # noqa
-#  from . import pathmagic  # noqa
+from . import pathmagic  # noqa
 
 import os
-#  import traceback
+import traceback
 
 #  from flask import current_app as app
 from .app import app
@@ -66,15 +65,15 @@ def profile(username):
 def handle_error(e):
     #  errorType, errorValue, errorTraceback = sys.exc_info()
     #  @see https://docs.python.org/2/library/traceback.html
-    #  errorTraceback = traceback.format_exc()
+    errorTraceback = traceback.format_exc()
     error = str(e)
-    #  errorRepr = e.__repr__()
-    #  errorData = {
-    #      'error': error,
-    #      'repr': errorRepr,
-    #      'traceback': str(errorTraceback)
-    #  }
-    #  DEBUG('server:Exception', errorData)
+    errorRepr = e.__repr__()
+    errorData = {
+        'error': error,
+        'repr': errorRepr,
+        'traceback': str(errorTraceback)
+    }
+    DEBUG('server:Exception', errorData)
     #  return jsonify(errorData), getattr(e, 'code', 500)
     return render_template('error.html', error=error), getattr(e, 'code', 500)
 

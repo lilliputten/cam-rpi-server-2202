@@ -8,10 +8,6 @@
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
 #  - https://flask.palletsprojects.com/en/2.0.x/config/
 
-"""
-Config module
-"""
-
 from os import path
 import json
 #  import yaml

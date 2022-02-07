@@ -4,6 +4,7 @@
 # @changed 2022.02.07, 01:28
 
 #  import pathmagic  # noqa # Add parent path to import paths for import config in debug mode
+from . import pathmagic  # noqa
 
 #  import os
 from os import path
