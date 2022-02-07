@@ -1,10 +1,13 @@
 #!/bin/sh
 # @desc Update/restart server on local device server (rpi)
 # @since 2022.02.07, 22:01
-# @changed 2022.02.07, 22:32
+# @changed 2022.02.07, 23:31
 # @see https://peppe8o.com/beginners-guide-to-install-a-flask-python-web-server-on-raspberry-pi/
 # @see https://docs.gunicorn.org/en/stable/run.html
 # @see utils/rpi-gunicorn-help.txt
+
+# Full path to gunicorn python script (for running under crontab; use `command -v gunicorn`)
+GUNICORN="/home/pi/.local/bin/gunicorn"
 
 # Determine real project path...
 REALFILE=`realpath "$0"`
@@ -32,7 +35,8 @@ fi
 rm -f "$ROOT/log*.txt" "$ROOT/.gunicorn.*"
 
 # Start daemon...
-gunicorn \
+echo "Starting daemon..." \
+&& "$GUNICORN" \
   --reload \
   -D \
   -w 1 \
@@ -40,6 +44,7 @@ gunicorn \
   --chdir "$ROOT" \
   --pid="$ROOT/.gunicorn.pid" \
   --log-file="$ROOT/.gunicorn.log" \
-  index
+  index \
+&& echo OK
 
 # TODO: Extract port number (and other options?) to config?
