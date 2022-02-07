@@ -8,7 +8,8 @@ import sys
 import os
 
 # Sample code
-activate_this = '/home/g/goldenjeru/.venv-flask/bin/activate_this.py'
+activate_this = '/home/g/goldenjeru/.virtualenv/bin/activate_this.py'
+#  activate_this = '/home/g/goldenjeru/.venv-flask/bin/activate_this.py'
 #  activate_this = '/home/g/goldenjeru/.venv-py3-flask/bin/activate_this.py'
 with open(activate_this) as f:
     code = compile(f.read(), activate_this, 'exec')
