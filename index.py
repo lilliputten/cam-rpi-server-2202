@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft=python:
 # @module index.wsgi
-# @desc Local server start script
+# @desc Local server start script (for start with gunicorn; see `utils/rpi-start-server.sh`)
 # @since 2022.02.07, 21:30
 # @changed 2022.02.07, 21:30
 

@@ -6,6 +6,8 @@ test-image.*
 uploads
 log*.txt
 *.log
+gunicorn.*
+.gunicorn.*
 
 # Unused & temp files
 \!UNUSED
