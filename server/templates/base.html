@@ -9,14 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-    <!--
     {% if 'FLASK_ENV'|getenv == 'development' %}
-    <link rel="stylesheet" href="/flask-static/cdn/css/bootstrap.css" />
-    <link rel="stylesheet" href="/flask-static/cdn/css/font-awesome.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='local-cdn/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='local-cdn/css/font-awesome.css') }}" />
     {% else %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!--
     <link rel="stylesheet" href="/flask-static/styles.css">
     -->
   </head>
@@ -30,14 +31,14 @@
       {% block content %}{% endblock %}
     </div>
 
-    <!--
     {% if 'FLASK_ENV'|getenv == 'development' %}
-    <script src="/flask-static/cdn/js/jquery-3.5.1.slim.js"></script>
-    <script src="/flask-static/cdn/js/bootstrap.js"></script>
+    <script src="{{ url_for('static', filename='local-cdn/js/jquery-3.5.1.slim.js') }}"></script>
+    <script src="{{ url_for('static', filename='local-cdn/js/bootstrap.js') }}"></script>
     {% else %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     {% endif %}
+    <!--
     -->
   </body>
 </html>

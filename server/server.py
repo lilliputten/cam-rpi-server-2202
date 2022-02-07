@@ -71,7 +71,7 @@ if doInit:  # NOTE: Initializing only once...
 
     @app.route('/user/<username>')
     def profile(username):
-        return 'User: %s' % username
+        return 'Raw html: User: %s' % username
 
     # Errors processing...
 
