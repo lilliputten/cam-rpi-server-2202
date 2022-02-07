@@ -8,7 +8,7 @@
 import sys
 import os
 
-#  # Activate venv...
+#  # Activate venv (UNUSED for local device?)...
 #  venv = 'venv-py3-flask'  # Python 3.6
 #  #  venv = 'virtualenv'  # Default
 #  #  venv = 'venv-flask'  # Python 2.7
