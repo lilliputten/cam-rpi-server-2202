@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=python:
 # @module index.wsgi
+# @desc Fullspace hosting server start script
 # @since 2019.03.28, 21:32
-# @changed 2022.02.07, 05:22
+# @changed 2022.02.07, 21:27
 
 import sys
 import os
