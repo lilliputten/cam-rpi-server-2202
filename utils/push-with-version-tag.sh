@@ -4,11 +4,11 @@
 # @changed 2022.01.03, 19:58
 
 # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
-test -f "./utils/util-config.sh" && . "./utils/util-config.sh"
-test -f "./utils/util-config-local.sh" && . "./utils/util-config-local.sh"
+test -f "./utils/config.sh" && . "./utils/config.sh"
+test -f "./utils/config-local.sh" && . "./utils/config-local.sh"
 
 if [ -z "$SRC_TAG_PREFIX" ]; then
-  echo "No tag prefix is specified. Add 'SRC_TAG_PREFIX' parameter in 'util-config.sh'."
+  echo "No tag prefix is specified. Add 'SRC_TAG_PREFIX' parameter in 'config.sh'."
   exit 1
 fi
 

@@ -8,18 +8,18 @@
 # ```
 
 # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
-test -f "./utils/util-config.sh" && . "./utils/util-config.sh"
-test -f "./utils/util-config-local.sh" && . "./utils/util-config-local.sh"
+test -f "./utils/config.sh" && . "./utils/config.sh"
+test -f "./utils/config-local.sh" && . "./utils/config-local.sh"
 
 # # Check basic required variables...
-# test -f "./utils/util-config-check.sh" && . "./utils/util-config-check.sh"
+# test -f "./utils/config-check.sh" && . "./utils/config-check.sh"
 
 if [ -z "$DIST_REPO" ]; then
-  echo "Repository url isn't specified. See 'DIST_REPO' parameter in 'util-config.sh'"
+  echo "Repository url isn't specified. See 'DIST_REPO' parameter in 'config.sh'"
   exit 1
 fi
 if [ -z "$PUBLISH_FOLDER" ]; then
-  echo "Publish folder isn't specified. See 'PUBLISH_FOLDER' parameter in 'util-config.sh'"
+  echo "Publish folder isn't specified. See 'PUBLISH_FOLDER' parameter in 'config.sh'"
   exit 1
 fi
 

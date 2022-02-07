@@ -3,14 +3,14 @@
 # @changed 2022.01.04, 22:56
 
 # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
-test -f "./utils/util-config.sh" && . "./utils/util-config.sh"
-test -f "./utils/util-config-local.sh" && . "./utils/util-config-local.sh"
+test -f "./utils/config.sh" && . "./utils/config.sh"
+test -f "./utils/config-local.sh" && . "./utils/config-local.sh"
 
 # Check basic required variables...
-test -f "./utils/util-config-check.sh" && . "./utils/util-config-check.sh"
+test -f "./utils/config-check.sh" && . "./utils/config-check.sh"
 
 # Make build if absent
-sh "./utils/util-publish-update.sh" || exit 1
+sh "./utils/publish-update.sh" || exit 1
 
 TIMESTAMP=`cat build-timestamp.txt`
 TIMETAG=`cat build-timetag.txt`

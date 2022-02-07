@@ -4,7 +4,7 @@
 
 DIST_REPO="git@github.com:lilliputten/2201-march-nextjs-temp-splash.git"
 DIST_BRANCH="publish"
-SRC_TAG_PREFIX="nmarket-layout" # "v" for default "v.X.Y.Z"
+SRC_TAG_PREFIX="v." # "v" for default "v.X.Y.Z"
 
 PUBLISH_FOLDER="$DIST_BRANCH"
 

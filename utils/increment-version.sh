@@ -3,11 +3,11 @@
 # @changed 2022.02.06, 23:20
 
 # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
-test -f "./utils/util-config.sh" && . "./utils/util-config.sh"
-test -f "./utils/util-config-local.sh" && . "./utils/util-config-local.sh"
+test -f "./utils/config.sh" && . "./utils/config.sh"
+test -f "./utils/config-local.sh" && . "./utils/config-local.sh"
 
 # Check basic required variables...
-test -f "./utils/util-config-check.sh" && . "./utils/util-config-check.sh"
+test -f "./utils/config-check.sh" && . "./utils/config-check.sh"
 
 # Read version from file...
 VERSION_FILE="build-version.txt"

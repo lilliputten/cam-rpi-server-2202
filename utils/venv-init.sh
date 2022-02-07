@@ -3,7 +3,7 @@
 # @changed 2022.02.06, 23:33
 
 if uname | grep -q "CYGWIN"; then
-  cmd /C "utils\util-venv-init.cmd"
+  cmd /C "utils\venv-init.cmd"
 else
   # Global system requirements...
   pip install setuptools virtualenv

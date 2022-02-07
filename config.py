@@ -24,24 +24,24 @@ yamlLocalConfigFilename = path.join(rootPath, 'config.local.yml')
 
 uploadPath = path.join(rootPath, 'uploads')
 
-# Build params...
+#  Build params...
 clientTemplatePath = path.join(rootPath, 'cam-client-app-build')
 clientStaticPath = path.join(clientTemplatePath, 'static')
 
-# Generate/read build parameters (version, timetag etc)
-# Default values (empty)...
+#  Generate/read build parameters (version, timetag etc)
+#  Default values (empty)...
 version = ''
 timestamp = ''
 timetag = ''
 buildTag = ''
-# Filenames...
+#  Filenames...
 buildVersionFilename = path.join(rootPath, 'build-version.txt')
 buildTagFilename = path.join(rootPath, 'build-tag.txt')
 timestampFilename = path.join(rootPath, 'build-timestamp.txt')
 timetagFilename = path.join(rootPath, 'build-timetag.txt')
 packageFilename = path.join(rootPath, 'package.json')
+#  Read version...
 #  print('config: packageFilename', packageFilename  # DEBUG)
-# Read version...
 if path.isfile(buildVersionFilename):
     version = readFiletoString(buildVersionFilename)
 elif path.isfile(packageFilename):
