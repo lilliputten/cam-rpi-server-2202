@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 # @module logger
 # @since 2020.02.23, 02:18
-# @changed 2022.02.07, 01:28
+# @changed 2022.02.08, 02:09
 
 #  import pathmagic  # noqa # Add parent path to import paths for import config in debug mode
 from . import pathmagic  # noqa
 
+import math
 #  import os
 from os import path
 import datetime
@@ -19,11 +20,12 @@ from config import config
 
 
 def createHeader():
-    now = datetime.datetime.now()
-    dateTag = now.strftime(config['logDateFormat'])
+    now = datetime.datetime.now()  # Get current date object
+    timestamp = math.floor(now.timestamp() * 1000)  # Get milliseconds timestamp (for technical usage)
+    dateTag = now.strftime(config['logDateFormat'])  # Format date
     #  if dateTag.endswith('000'):  # Remove extra finsishing '000'
     dateTag = dateTag[:-3]  # Convert microseconds (.NNNNNN) to milliseconds (.NNN)
-    header = '[' + dateTag + ']'
+    header = '[' + str(timestamp) + ' ' + dateTag + ']'
     return header
 
 
@@ -55,7 +57,7 @@ def DEBUG(title, data=None):
             fileMode = 'w'  # Clear file on first entry (wb)
     if config['writeLog']:
         rootPath = config['rootPath']  # os.getcwd()
-        logFile = path.join(rootPath, 'log.txt')
+        logFile = path.join(rootPath, config['logFileName'])
         with open(logFile, fileMode) as file:
             file.write(header + '\n')
             file.write(title + '\n')

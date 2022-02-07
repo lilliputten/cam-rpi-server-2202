@@ -2,7 +2,7 @@
 # @module config
 # @desc Universal server & client config
 # @since 2022.02.06, 23:56
-# @changed 2022.02.06, 23:56
+# @changed 2022.02.08, 02:09
 # See:
 #  - https://docs.python.org/3/library/configparser.html -- ???
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
@@ -26,7 +26,8 @@ uploadPath = path.join(rootPath, 'uploads')
 
 #  Build params...
 clientTemplatePath = path.join(rootPath, 'cam-client-app-build')
-clientStaticPath = path.join(clientTemplatePath, 'static')
+clientStaticPath = path.join(rootPath, 'static')
+#  clientStaticPath = path.join(clientTemplatePath, 'static')
 
 #  Generate/read build parameters (version, timetag etc)
 #  Default values (empty)...
@@ -103,19 +104,20 @@ config = {  # Default config
 
     # Logging...
 
-    'outputLog': True,
-    'outputColoredLog': True,
-    'writeLog': True,
-    'clearLogFile': False,
+    'outputLog': True,  # Print log to stdout
+    'outputColoredLog': True,  # Use rich output log format with `termcolor`
+    'writeLog': True,  # Write log to external file
+    'clearLogFile': False,  # Clear log file at start
+    'logFileName': 'log.txt',  # Log file name
 
     # Datetime formats...
 
-    'dateTagFormat': '%y%m%d-%H%M',
-    'dateTagPreciseFormat': '%y%m%d-%H%M%S',
-    'shortDateFormat': '%Y.%m.%d-%H:%M',
-    'preciseDateFormat': '%Y.%m.%d-%H:%M:%S',
-    'logDateFormat': '%y%m%d-%H%M%S-%f',
-    'detailedDateFormat': '%Y.%m.%d-%H:%M:%S.%f',
+    'dateTagFormat': '%y%m%d-%H%M',  # eg: '220208-0204'
+    'dateTagPreciseFormat': '%y%m%d-%H%M%S',  # eg: '220208-020423'
+    'shortDateFormat': '%Y.%m.%d-%H:%M',  # eg: '2022.02.08-02:04'
+    'preciseDateFormat': '%Y.%m.%d-%H:%M:%S',  # eg: '2022.02.08-02:04:23'
+    'logDateFormat': '%y%m%d-%H%M%S-%f',  # eg: '220208-020423-255157'
+    'detailedDateFormat': '%Y.%m.%d-%H:%M:%S.%f',  # eg: '2022.02.08-02:04:23.255157'
 
 }
 

@@ -75,14 +75,12 @@ if doInit:  # NOTE: Initializing only once...
 
     @app.errorhandler(404)
     def handle_not_found(err):
-        #  return render_template('404.html'), 404
-        #  errorTraceback = traceback.format_exc()
+        # TODO: Determine not found page url
         error = str(err)
         errorRepr = err.__repr__()
         errorData = {
             'error': error,
             'repr': errorRepr,
-            #  'traceback': str(errorTraceback)
         }
         DEBUG('server:errorhandler(404):handle_not_found', errorData)
         #  return jsonify(errorData), getattr(err, 'code', 500)

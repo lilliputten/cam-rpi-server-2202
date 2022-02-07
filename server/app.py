@@ -14,14 +14,23 @@ from config import config
 
 from werkzeug.routing import BaseConverter
 
+from .logger import DEBUG
+
 
 #  rootPath = config['rootPath']
-#  clientStaticPath = config['clientStaticPath']
+clientStaticPath = config['clientStaticPath']
 clientTemplatePath = config['clientTemplatePath']
 
+DEBUG('App starting', {
+    'clientStaticPath': clientStaticPath,
+    'clientTemplatePath': clientTemplatePath,
+})
+
+
 app = Flask(__name__,
+            #  static_url_path=clientStaticPath,
             static_url_path='',
-            static_folder=clientTemplatePath)
+            static_folder=clientStaticPath)
 
 
 @app.template_filter()
