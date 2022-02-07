@@ -59,8 +59,10 @@ if doInit:  # NOTE: Initializing only once...
     # Tests...
 
     @app.route('/')
-    def hello_world():
-        return '<p>Hello, World!</p>'
+    def index_page():
+        #  return '<p>Hello, World!</p>'
+        name = 'guest'
+        return render_template('hello.html', name=name)
 
     @app.route('/hello/')
     @app.route('/hello/<name>')

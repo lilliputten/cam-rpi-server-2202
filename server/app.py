@@ -28,7 +28,6 @@ DEBUG('App starting', {
 
 
 app = Flask(__name__,
-            #  static_url_path=clientStaticPath,
             static_url_path='',
             static_folder=clientStaticPath)
 
