@@ -18,8 +18,8 @@ REALFILE=`realpath "$0"`
 REALDIR=`dirname "$REALFILE"`
 ROOT=`dirname "$REALDIR"`
 
-PIDFILE="$ROOT/.gunicorn.pid"
-LOGFILE="$ROOT/.gunicorn.log"
+PIDFILE="$ROOT/log-gunicorn.pid"
+LOGFILE="$ROOT/log-gunicorn.log"
 
 # # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
 # test -f "$REALDIR/utils/config.sh" && . "$REALDIR/utils/config.sh"
@@ -42,8 +42,8 @@ if [ -f "$PIDFILE" ]; then
   # `killall gunicorn`
 fi
 
-# Remove all log files...
-rm -f $ROOT/.gunicorn.*
+# Remove old log files...
+rm -f "$LOGFILE"
 # # "$ROOT/log*.txt" # NOTE: Remove log files?
 
 # Start daemon...
