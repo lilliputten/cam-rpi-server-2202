@@ -1,13 +1,14 @@
 <!doctype html>
 <!--
-  @changed 2020.10.26, 02:25
+  @changed 2022.02.08, 01:20
 -->
 <html>
   <head>
-    <title>{% block title %}{% endblock %} &#151; Cam Images</title>
+    <title>{% block title %}{% endblock %} &#151; Demo Site</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <!--
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     {% if 'FLASK_ENV'|getenv == 'development' %}
     <link rel="stylesheet" href="/flask-static/cdn/css/bootstrap.css" />
@@ -17,65 +18,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     {% endif %}
     <link rel="stylesheet" href="/flask-static/styles.css">
+    -->
   </head>
   <body class="body">
 
     <div class="no-styles-warning">
-      <strong>ATTENTION:</strong> No styles loaded. Check for
-      <u>`cam-client-app-build`</u> link (for
-      <u>`../cam-client-app/publish`</u> in dev mode or
-      <u>`cam-client-app-build`</u> for production).
+      <strong>ATTENTION:</strong> No styles loaded. Check for build/publish folders.
     </div>
 
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-        <a class="navbar-brand" href="/">
-          <strong>Cam Images Project</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-          <ul class="navbar-nav text-center">
-            <li class="nav-item {% if request.url_rule.endpoint == 'viewLastImage' %}active{% endif %}">
-              <a class="nav-link" href="/last">Last image</a>
-            </li>
-            <li class="nav-item {% if request.url_rule.endpoint == 'listAllImages' %}active{% endif %}">
-              <a class="nav-link" href="/list">All images list</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-
-    <main role="main">
-      <div class="container">
-        <div class="row">
-          <div class="content col-12 my-4">
-            {% block content %}{% endblock %}
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="light">Confirm action</h2>
-          </div>
-          <div class="modal-body">
-            Are you sure to delete all the images on server?
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-danger btn-ok" href="/remove"><i class="fa fa-trash"></i> Remove all</a>
-            <button type="button" class="btn btn-light" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-          </div>
-        </div>
-      </div>
+    <div class="content">
+      {% block content %}{% endblock %}
     </div>
 
+    <!--
     {% if 'FLASK_ENV'|getenv == 'development' %}
     <script src="/flask-static/cdn/js/jquery-3.5.1.slim.js"></script>
     <script src="/flask-static/cdn/js/bootstrap.js"></script>
@@ -83,5 +38,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     {% endif %}
+    -->
   </body>
 </html>

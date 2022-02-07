@@ -64,9 +64,10 @@ def DEBUG(title, data=None):
         if config['outputColoredLog']:
             header = colored(header, 'green')
             title = colored(title, 'red')
-        print(header)
-        print(title)
-        print(logData)
+        print(header + "\n" + title + "\n" + logData)
+        #  print(header)
+        #  print(title)
+        #  print(logData)
     loggedEntries += 1
 
 
