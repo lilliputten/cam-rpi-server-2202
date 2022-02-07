@@ -1,5 +1,5 @@
 <!--
- @changed 2022.02.07, 00:35
+ @changed 2022.02.07, 22:41
 -->
 
 # Cam flask photo receiver server & raspberry camera client
@@ -83,8 +83,8 @@ Use crontab to automate image capture.
 
 ### Sample crontab lines:
 
-- Every minute: `* * * * * /home/pi/cam-client/client-make-and-upload-image.sh`
-- Every 15th minute: `*/15 * * * * /home/pi/cam-client/client-make-and-upload-image.sh`
+- Every minute: `* * * * * /home/pi/projects/cam-rpi-server/client-make-and-upload-image.sh`
+- Every 15th minute: `*/15 * * * * /home/pi/projects/cam-rpi-server/client-make-and-upload-image.sh`
 
 ## Real crontab entry example:
 
@@ -93,13 +93,16 @@ Use crontab to automate image capture.
 # 30 */1 * * * date >> ~/test_crontab
 
 # Make & upload shots every 15 minutes (with forced logging)...
-*/5 * * * * sh /home/pi/cam-client/client-make-and-upload-image.sh >> /home/pi/cam-client/cron-log.txt 2>&1
+*/5 * * * * sh /home/pi/projects/cam-rpi-server/client-make-and-upload-image.sh >> /home/pi/projects/cam-rpi-server/cron-log.txt 2>&1
 
 # Make & upload shots every 20 minutes...
-*/20 * * * * sh /home/pi/cam-client/client-make-and-upload-image.sh
+*/20 * * * * sh /home/pi/projects/cam-rpi-server/client-make-and-upload-image.sh
 
 # Reboot every 3 hours (00:55, 03:55, etc...)
 55 */3 * * * sudo reboot -f
+
+# Start server on boot
+@reboot sh /home/pi/projects/cam-rpi-server/utils/rpi-start-server.sh
 ```
 
 ### Crontab commands:
@@ -132,7 +135,7 @@ tail -f /var/log/cron.log
 Or use output reirect in command:
 
 ```shell
-/home/pi/cam-client/client-make-and-upload-image.sh >> /home/pi/cam-client/cron.log 2>&1
-python /home/pi/cam-client/client-make-image.py >>  /home/pi/cam-client/cron.log 2>&1
+/home/pi/cam-rpi-server/client-make-and-upload-image.sh >> /home/pi/cam-rpi-server/cron.log 2>&1
+python /home/pi/cam-client/client-make-image.py >>  /home/pi/projects/cam-rpi-server/cron.log 2>&1
 ```
 

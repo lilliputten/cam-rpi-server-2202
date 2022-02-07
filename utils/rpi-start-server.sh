@@ -1,7 +1,7 @@
 #!/bin/sh
 # @desc Update/restart server on local device server (rpi)
 # @since 2022.02.07, 22:01
-# @changed 2022.02.07, 22:32
+# @changed 2022.02.07, 22:43
 # @see https://peppe8o.com/beginners-guide-to-install-a-flask-python-web-server-on-raspberry-pi/
 # @see https://docs.gunicorn.org/en/stable/run.html
 # @see utils/rpi-gunicorn-help.txt
@@ -29,7 +29,9 @@ if [ -f "$ROOT/.gunicorn.pid" ]; then
 fi
 
 # Remove all log files...
-rm -f "$ROOT/log*.txt" "$ROOT/.gunicorn.*"
+rm -f "$ROOT/.gunicorn.*"
+# To clean all logs?
+# "$ROOT/log*.txt"
 
 # Start daemon...
 gunicorn \
