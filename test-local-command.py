@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @module test-local-command
 # @since 2022.02.08, 03:15
-# @changed 2022.02.08, 03:15
+# @changed 2022.02.08, 04:02
 
 #  import os
 #  import errno
@@ -14,8 +14,19 @@ import server.errors
 
 def execCmd():
     #  cmd = ['echox', 'More output']
-    cmd = ['raspistill', '-w 648 -h 486 -o test-image.jpg']
-    DEBUG('test-local-command:execCmd: Command execution result', {
+    #  cmd = ['raspistill', '-w 648 -h 486 -o test-image.jpg']
+    #  cmd = 'raspistill -w 648 -h 486 -o test-image.jpg'
+    cmd = [
+        'raspistill',
+        '-w',
+        '648',
+        '-h',
+        '486',
+        '-o',
+        'test-image.jpg',
+    ]
+    #  cmd = ['raspistill', '--help']
+    DEBUG('test-local-command:execCmd: Execution started', {
         'cmd': cmd,
     })
     try:
@@ -23,7 +34,7 @@ def execCmd():
         bStdout, bStderr = process.communicate()
         stdout = bStdout.decode('utf-8').strip()
         stderr = bStderr.decode('utf-8').strip()
-        DEBUG('test-local-command:execCmd: Command execution result', {
+        DEBUG('test-local-command:execCmd: Execution success', {
             'stdout': stdout,
             'stderr': stderr,
         })
