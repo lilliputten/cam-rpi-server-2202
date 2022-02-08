@@ -115,8 +115,13 @@ if doInit:  # NOTE: Initializing only once...
         }
         if code:  # Skip non-errors...
             if code == 308 and err.new_url:  # Skip redirect errors...
-                DEBUG('server:errorhandler(Exception):handle_exception: redirect', errorData)
-                return redirect(err.new_url)
+                new_url = err.new_url
+                DEBUG('server:errorhandler(Exception):handle_exception: redirect', {
+                    'code': code,
+                    'new_url': new_url,
+                    'error': err,
+                })
+                return redirect()
             # TODO: Other non-errors?
             #  if code >= 200 and code < 400:
         DEBUG('server:errorhandler(Exception):handle_exception', errorData)
