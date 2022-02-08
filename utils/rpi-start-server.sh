@@ -42,8 +42,8 @@ if [ -f "$PIDFILE" ]; then
   # `killall gunicorn`
 fi
 
-# Remove old log files...
-rm -f "$LOGFILE"
+# # Remove old log files...
+rm -f "$PIDFILE"
 # # "$ROOT/log*.txt" # NOTE: Remove log files?
 
 # Start daemon...
