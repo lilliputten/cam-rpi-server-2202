@@ -22,7 +22,8 @@ from config import config
 def createHeader():
     now = datetime.datetime.now()  # Get current date object
     timestamp = math.floor(now.timestamp() * 1000)  # Get milliseconds timestamp (for technical usage)
-    dateTag = now.strftime(config['logDateFormat'])  # Format date
+    dateTag = now.strftime(config['logDateFormat'])  # Format date like '220208-020423-255157'
+    dateTag = now.strftime(config['detailedDateFormat'])  # Format date like 2022.02.08-02:04:23.255157
     #  if dateTag.endswith('000'):  # Remove extra finsishing '000'
     dateTag = dateTag[:-3]  # Convert microseconds (.NNNNNN) to milliseconds (.NNN)
     header = '[' + str(timestamp) + ' ' + dateTag + ']'
