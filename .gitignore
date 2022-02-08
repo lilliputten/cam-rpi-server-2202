@@ -1,6 +1,7 @@
 # Client files
-local-image.*
-test-image.*
+/local-image.*
+/test-image.*
+/test-*
 
 # Auto-generated files
 uploads
