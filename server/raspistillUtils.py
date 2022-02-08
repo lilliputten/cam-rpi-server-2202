@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
 # @module raspistillUtils
 # @since 2022.02.08, 04:10
-# @changed 2022.02.08, 06:11
+# @changed 2022.02.08, 06:19
+#
+#  TODO 2022.02.08, 06:17 -- Determine running environemnt (public server, device server)
+#  TODO 2022.02.08, 06:17 -- Measure command execution time
 
 #  import os
 #  import errno
@@ -50,6 +53,7 @@ def makeShot(debug=False):
     Executes external shot command.
     Returns shot file name.
     """
+
     imgFile = 'test-image.jpg' if debug else config['localImageFile']
     imgPath = path.join(config['rootPath'], imgFile)
     realCmd = [
