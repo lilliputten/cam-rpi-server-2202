@@ -121,7 +121,7 @@ if doInit:  # NOTE: Initializing only once...
                     'new_url': new_url,
                     'error': err,
                 })
-                return redirect()
+                return redirect(new_url)
             # TODO: Other non-errors?
             #  if code >= 200 and code < 400:
         DEBUG('server:errorhandler(Exception):handle_exception', errorData)
