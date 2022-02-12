@@ -9,8 +9,8 @@
 #  greenlet.error: cannot switch to a different thread
 #  gevent.hub.LoopExit: ('This operation would block forever', <Hub at 0x7f7ed4449508 epoll default pending=0>)
 #  @see [greenlet.error: cannot switch to a different thread · Issue #65 · miguelgrinberg/Flask-SocketIO](https://github.com/miguelgrinberg/Flask-SocketIO/issues/65)
-from gevent import monkey
-monkey.patch_all()
+#  from gevent import monkey
+#  monkey.patch_all()
 
 import sys  # noqa
 import os  # noqa
