@@ -36,30 +36,33 @@ DEBUG('@:blueprintSockets: starting', {
 
 
 @socketio.on('join')
-def client_join_room(data):
-    print(type(data))
-    DEBUG('@:blueprintSockets:client_join_room', {
+def sockets_on_join(data):
+    room = data['room']
+    DEBUG('@:blueprintSockets:sockets_on_join', {
+        'room': room,
         'data': data,
     })
-    room = data['room']
     join_room(room)
     send('you have entered the room.', room=room)
 
 
 @blueprintSockets.route('/sockets/start')
 @blueprintSockets.route('/sockets/start/<name>')
-def sockets_test(name=None):
+def sockets_start(name=None):
+    data = {'name': name}
+    DEBUG('@:blueprintSockets:sockets_start', data)
     #  socketio.emit('message', 'Message: name: ' + str(name), room='my_room', broadcast=True)
-    #  data = {'name': name}
     #  return jsonify(data)
     return render_template('sockets.html', name=name)
 
 
 @blueprintSockets.route('/sockets/msg/')
 @blueprintSockets.route('/sockets/msg/<name>')
-def send_message(name=None):
-    socketio.emit('message', 'Server: name: ' + name, room='my_room', broadcast=True)
+def sockets_msg(name=None):
     data = {'name': name}
+    DEBUG('@:blueprintSockets:sockets_msg: before emit', data)
+    socketio.emit('message', 'Server: name: ' + name, room='my_room', broadcast=True)
+    DEBUG('@:blueprintSockets:sockets_msg: after emit', data)
     return jsonify(data)
 
 
