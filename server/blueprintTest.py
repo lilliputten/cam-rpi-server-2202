@@ -15,18 +15,18 @@ from flask import render_template
 #  from flask import jsonify
 #  from flask import request
 
-from config import config
+#  from config import config
 
 from .logger import DEBUG
 
 
 blueprintTest = Blueprint('blueprintTest', __name__)
 
+#  # NOTE: Logged twice with `* Restarting with stat` in dev mode
+#  DEBUG('@:blueprintTest: starting', {
+#      'buildTag': config['buildTag'],
+#  })
 
-# NOTE: Logged twice with `* Restarting with stat` in dev mode
-DEBUG('@:blueprintTest: starting', {
-    'buildTag': config['buildTag'],
-})
 
 # Tests...
 

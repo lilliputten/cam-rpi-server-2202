@@ -10,6 +10,10 @@
 - python-engineio==3.13.2
 - python-socketio==4.6.0
 
+## Client libraries
+
+- [Client Installation | Socket.IO](https://socket.io/docs/v4/client-installation/)
+
 ## Info
 
 - [Flask-SocketIO — Flask-SocketIO documentation](https://flask-socketio.readthedocs.io/en/latest/)

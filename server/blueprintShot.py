@@ -22,7 +22,6 @@ from . import raspistillUtils
 
 blueprintShot = Blueprint('blueprintShot', __name__)
 
-
 #  # NOTE: Logged twice with `* Restarting with stat` in dev mode
 #  DEBUG('@:blueprintShot: starting', {
 #      'buildTag': config['buildTag'],

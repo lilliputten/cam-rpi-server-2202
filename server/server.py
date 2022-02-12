@@ -8,20 +8,9 @@ from . import pathmagic  # noqa
 
 import os
 
-#  from externalApi import externalApi
-#  from flask import jsonify
-#  from flask import redirect
-#  from flask import render_template
-#  from flask import request
-#  from flask import url_for
-#  import imageUtils
-#  import listImages
 from config import config
 from .app import app
 from .logger import DEBUG
-from . import serverUtils
-from .blueprintTest import blueprintTest
-from .blueprintShot import blueprintShot
 
 
 run_main = os.environ.get('WERKZEUG_RUN_MAIN')
@@ -29,6 +18,20 @@ isMain = run_main == 'true'
 doInit = not config['isDev'] or isMain
 
 if doInit:  # NOTE: Initializing only once (avoiding double initialization with `* Restarting with stat`...)
+
+    #  from externalApi import externalApi
+    #  from flask import jsonify
+    #  from flask import redirect
+    #  from flask import render_template
+    #  from flask import request
+    #  from flask import url_for
+    #  import imageUtils
+    #  import listImages
+
+    from . import serverUtils
+    from .blueprintTest import blueprintTest
+    from .blueprintShot import blueprintShot
+    from .blueprintSockets import blueprintSockets
 
     DEBUG('@:server: starting', {
         'doInit': doInit,
@@ -45,6 +48,7 @@ if doInit:  # NOTE: Initializing only once (avoiding double initialization with 
 
     app.register_blueprint(blueprintTest)
     app.register_blueprint(blueprintShot)
+    app.register_blueprint(blueprintSockets)
 
     # Errors handling...
 
