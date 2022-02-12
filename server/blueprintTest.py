@@ -34,7 +34,7 @@ blueprintTest = Blueprint('blueprintTest', __name__)
 @blueprintTest.route('/')
 def route_root():
     #  return '<p>Hello, World!</p>'
-    return 'route_root'
+    return 'blueprintTest:route_root'
     #  name = 'guest'
     #  return render_template('hello.html', name=name)
 
@@ -47,7 +47,7 @@ def route_hello(name=None):
 
 @blueprintTest.route('/user/<username>')
 def route_user(username):
-    return 'Raw html: User: %s' % username
+    return 'blueprintTest: Raw html: User: %s' % username
 
 
 __all__ = [  # Exporting objects...

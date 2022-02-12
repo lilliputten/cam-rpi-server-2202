@@ -1,5 +1,5 @@
 <!--
- @changed 2022.02.07, 22:41
+ @changed 2022.02.12, 03:54
 -->
 
 # Cam flask photo receiver server & raspberry camera client
@@ -147,3 +147,28 @@ Or use output reirect in command:
 python /home/pi/cam-client/client-make-image.py >>  /home/pi/projects/cam-rpi-server/cron.log 2>&1
 ```
 
+## Run gunicorn service on raspberry (using `index.py`)
+
+- [Beginners guide to install a Flask (Python) web server on Raspberry PI](https://peppe8o.com/beginners-guide-to-install-a-flask-python-web-server-on-raspberry-pi/)
+- [Running Gunicorn — Gunicorn 20.1.0 documentation](https://docs.gunicorn.org/en/stable/run.html)
+
+> gunicorn -w 1 -b 0.0.0.0:4000 hello:app
+
+Real command (see `utils/rpi-start-server.sh`, attention for port number, in `-b` switch):
+
+```
+&& "$GUNICORN" \
+  --reload \
+  -D \
+  -w 1 \
+  -b 0.0.0.0:4000 \
+  --chdir "$ROOT" \
+  --pid="$PIDFILE" \
+  --log-file="$LOGFILE" \
+  index \
+&& echo "Done." \
+```
+
+See `log-gunicorn.log` and `log-gunicorn.pid` files in project root folder after start.
+
+For autostart see 'crontab' section above.
