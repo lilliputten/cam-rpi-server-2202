@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Page not found</h1>
-<p>Page not found on server: {{ url_for(request.endpoint, **request.view_args) }}</p>
+<p>Page not found on server: <u>{{request.path}}</u></p>
 <!--
 <p><strong>Server error message:</strong> {{error}}</p>
 -->

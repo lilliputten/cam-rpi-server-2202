@@ -7,6 +7,8 @@ build/
 bundles/
 utils/
 dist/
+/test*
+/temp*
 
 !.*.js
 

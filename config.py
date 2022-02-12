@@ -2,12 +2,13 @@
 # @module config
 # @desc Universal server & client config
 # @since 2022.02.06, 23:56
-# @changed 2022.02.08, 02:09
+# @changed 2022.02.12, 01:58
 # See:
 #  - https://docs.python.org/3/library/configparser.html -- ???
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
 #  - https://flask.palletsprojects.com/en/2.0.x/config/
 
+import os
 from os import path
 import json
 #  import yaml
@@ -16,6 +17,10 @@ import sys
 from config_helpers import updateConfigWithYaml, readFiletoString
 
 pythonVersion = sys.version
+
+env = os.getenv('FLASK_ENV')
+isDev = env == 'development'
+isProd = not isDev
 
 rootPath = path.dirname(path.abspath(__file__))  # Project root path
 
@@ -65,6 +70,10 @@ config = {  # Default config
 
     # Application parameters...
 
+    'env': env,
+    'isDev': isDev,
+    'isProd': isProd,
+
     'pythonVersion': pythonVersion,
     'version': version,
     'timestamp': timestamp,
@@ -107,7 +116,7 @@ config = {  # Default config
     'outputLog': True,  # Print log to stdout
     'outputColoredLog': True,  # Use rich output log format with `termcolor`
     'writeLog': True,  # Write log to external file
-    'clearLogFile': False,  # Clear log file at start
+    'clearLogFile': True,  # Clear log file at start
     'logFileName': 'log.txt',  # Log file name
 
     # Datetime formats...

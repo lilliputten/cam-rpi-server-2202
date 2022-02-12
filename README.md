@@ -7,9 +7,9 @@
 
 ## Build info (auto-generated)
 
-- Version: 0.0.2
-- Last changes timestamp: 2022.02.08, 00:51
-- Last changes timetag: 220208-0051
+- Version: 0.0.3
+- Last changes timestamp: 2022.02.12, 03:02
+- Last changes timetag: 220212-0302
 
 
 ## API
@@ -47,6 +47,13 @@ Local script for venv creating and initialization:
 
 ```
 sh utils/util-venv-init.sh
+```
+
+Local command for activate venv:
+
+```
+call .venv/Scripts/activate
+source .venv/Scripts/activate
 ```
 
 ## Python dependencies

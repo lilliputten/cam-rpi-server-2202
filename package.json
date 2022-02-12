@@ -1,9 +1,9 @@
 {
   "name": "cam-rpi-server-2202",
   "demo-server": "http://cam.lilliputten.ru/",
-  "version": "0.0.2",
-  "timetag": "220208-0051",
-  "timestamp": "2022.02.08, 00:51",
+  "version": "0.0.3",
+  "timetag": "220212-0302",
+  "timestamp": "2022.02.12, 03:02",
   "changed": "2022.01.22, 19:55",
   "changed": "2022.02.06, 23:10",
   "private": true,

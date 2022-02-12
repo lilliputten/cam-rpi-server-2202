@@ -2,6 +2,7 @@
 /local-image.*
 /test-image.*
 /test-*
+/temp/*
 
 # Auto-generated files
 uploads

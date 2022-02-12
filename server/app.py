@@ -5,26 +5,21 @@
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
 from . import pathmagic  # noqa
-
 import os
-
 from flask import Flask
-
 from config import config
-
 from werkzeug.routing import BaseConverter
-
-from .logger import DEBUG
+#  from .logger import DEBUG
 
 
 #  rootPath = config['rootPath']
 clientStaticPath = config['clientStaticPath']
 clientTemplatePath = config['clientTemplatePath']
 
-DEBUG('App starting', {
-    'clientStaticPath': clientStaticPath,
-    'clientTemplatePath': clientTemplatePath,
-})
+#  DEBUG('@:app: starting', {
+#      'clientStaticPath': clientStaticPath,
+#      'clientTemplatePath': clientTemplatePath,
+#  })
 
 
 app = Flask(__name__,

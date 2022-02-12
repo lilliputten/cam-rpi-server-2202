@@ -54,7 +54,7 @@ def makeShot(debug=False):
     Returns shot file name.
     """
 
-    imgFile = 'test-image.jpg' if debug else config['localImageFile']
+    imgFile = 'temp/test-image.jpg' if debug else config['localImageFile']
     imgPath = path.join(config['rootPath'], imgFile)
     realCmd = [
         'raspistill',
@@ -65,12 +65,12 @@ def makeShot(debug=False):
         '-o',
         imgPath,
         #  config['localImageFile'],
-        #  'test-image.jpg',
+        #  'temp/test-image.jpg',
     ]
     debugCmd = ['echo', 'Debug output']
     #  debugCmd = ['cat', imgPath]
-    #  cmd = ['raspistill', '-w 648 -h 486 -o test-image.jpg']
-    #  cmd = 'raspistill -w 648 -h 486 -o test-image.jpg'
+    #  cmd = ['raspistill', '-w 648 -h 486 -o temp/test-image.jpg']
+    #  cmd = 'raspistill -w 648 -h 486 -o temp/test-image.jpg'
     #  cmd = ['raspistill', '--help']
     cmd = debugCmd if debug else realCmd
     cmdStr = ' '.join(cmd)

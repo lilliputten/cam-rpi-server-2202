@@ -14,8 +14,8 @@ import server.errors
 
 def execCmd():
     #  cmd = ['echox', 'More output']
-    #  cmd = ['raspistill', '-w 648 -h 486 -o test-image.jpg']
-    #  cmd = 'raspistill -w 648 -h 486 -o test-image.jpg'
+    #  cmd = ['raspistill', '-w 648 -h 486 -o temp/test-image.jpg']
+    #  cmd = 'raspistill -w 648 -h 486 -o temp/test-image.jpg'
     cmd = [
         'raspistill',
         '-w',
@@ -23,7 +23,7 @@ def execCmd():
         '-h',
         '486',
         '-o',
-        'test-image.jpg',
+        'temp/test-image.jpg',
     ]
     #  cmd = ['raspistill', '--help']
     DEBUG('test-local-command:execCmd: Execution started', {
