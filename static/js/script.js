@@ -18,7 +18,7 @@ $(document).ready(function () {
   });
   socket.on('connect_error', function connect_error(err) {
     console.log('@:script:connect_error', err);
-    debugger;
+    // debugger;
   });
   socket.emit('join', { room: 'my_room' });
 });

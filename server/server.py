@@ -9,7 +9,7 @@ from . import pathmagic  # noqa
 import os
 
 from config import config
-from .appSocketIO import appSocketIO
+#  from .appSocketIO import appSocketIO
 from .app import app
 from .logger import DEBUG
 
