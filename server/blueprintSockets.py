@@ -15,27 +15,31 @@ from flask import jsonify
 from flask import render_template
 #  from flask import url_for
 #  from flask import request
-from flask_socketio import send, SocketIO, emit, join_room
+from flask_socketio import send
+from flask_socketio import SocketIO
+from flask_socketio import emit
+from flask_socketio import join_room
 from config import config
+from .appSocketIO import appSocketIO
 
 from .logger import DEBUG
 
 
 blueprintSockets = Blueprint('blueprintSockets', __name__)
 
-socketio = SocketIO(app, cors_allowed_origins="*")
+#  appSocketIO = SocketIO(app, cors_allowed_origins="*")
 
 # NOTE: Logged twice with `* Restarting with stat` in dev mode
 DEBUG('@:blueprintSockets: starting', {
     'buildTag': config['buildTag'],
-    #  'socketio': socketio,
+    #  'appSocketIO': appSocketIO,
 })
 
 
 useBroadcast = False
 
 
-@socketio.on('join')
+@appSocketIO.on('join')
 def sockets_on_join(data):
     room = data['room']
     sendData = {'from': '@:blueprintSockets:sockets_on_join', 'data': data, 'room': room}
@@ -49,7 +53,7 @@ def sockets_on_join(data):
 def sockets_start(name=None):
     data = {'from': '@:blueprintSockets:sockets_start', 'name': name}
     DEBUG('@:blueprintSockets:sockets_start', data)
-    socketio.emit('message', data, room='my_room', broadcast=useBroadcast)
+    appSocketIO.emit('message', data, room='my_room', broadcast=useBroadcast)
     #  return jsonify(data)
     return render_template('sockets.html', name=name)
 
@@ -59,7 +63,7 @@ def sockets_start(name=None):
 def sockets_msg(msg=None):
     data = {'from': '@:blueprintSockets:sockets_msg', 'msg': msg}
     DEBUG('@:blueprintSockets:sockets_msg: before emit', data)
-    socketio.emit('message', data, room='my_room', broadcast=useBroadcast)
+    appSocketIO.emit('message', data, room='my_room', broadcast=useBroadcast)
     DEBUG('@:blueprintSockets:sockets_msg: after emit', data)
     return jsonify(data)
 

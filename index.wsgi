@@ -18,6 +18,7 @@ with open(activate_this) as f:
     code = compile(f.read(), activate_this, 'exec')
     exec(code, dict(__file__=activate_this))
 
+# TODO: Reuse `index.py`?
 # Add application path...
 rootPath = os.path.dirname(os.path.abspath(__file__))  # From index.wsgi
 sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server/
