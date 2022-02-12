@@ -11,11 +11,11 @@ $(document).ready(function () {
     io: typeof io,
     socket: socket,
   });
-  debugger;
+  // debugger;
   // this is a callback that triggers when the "message" event is emitted by the server.
-  socket.on('message', function(msg) {
-    console.log('@:script:message', msg);
-    debugger;
+  socket.on('message', function(data) {
+    console.log('@:script:message', data);
+    // debugger;
   });
   socket.emit('join', { room: 'my_room' });
 });
