@@ -1,21 +1,14 @@
 # -*- coding:utf-8 -*-
 # @module appSocketIO
 # @since 2022.02.07, 00:27
-# @changed 2022.02.12, 06:08
+# @changed 2022.02.12, 06:11
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
 from . import pathmagic  # noqa
 
 from .app import app
-#  import os
-#  from flask import Flask
-#  from config import config
-#  from werkzeug.routing import BaseConverter
 from .logger import DEBUG
-#  from flask_socketio import send
 from flask_socketio import SocketIO
-#  from flask_socketio import emit
-#  from flask_socketio import join_room
 
 
 appSocketIO = SocketIO(app, cors_allowed_origins="*")
@@ -58,6 +51,13 @@ DEBUG('@:appSocketIO: starting', {
     'wsgi_server': appSocketIO.wsgi_server,
 })
 
+#  Log output from remote server:
+#
+#  [1644635348832 2022.02.12-06:09:08.832]
+#  @:appSocketIO: starting
+#    async_mode: gevent
+#    manage_session: true
+#    wsgi_server: null
 
 __all__ = [  # Exporting objects...
     'appSocketIO',

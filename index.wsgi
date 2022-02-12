@@ -19,9 +19,14 @@ with open(activate_this) as f:
     exec(code, dict(__file__=activate_this))
 
 # TODO: Reuse `index.py`?
-# Add application path...
+
+# Inject application path...
 rootPath = os.path.dirname(os.path.abspath(__file__))  # From index.wsgi
 sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server/
 
 # Start application...
 from server.server import app as application  # noqa
+
+__all__ = [  # Exporting objects...
+    'application',
+]
