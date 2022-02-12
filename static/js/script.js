@@ -12,9 +12,13 @@ $(document).ready(function () {
     socket: socket,
   });
   // this is a callback that triggers when the "message" event is emitted by the server.
-  socket.on('message', function(data) {
-    console.log('@:script:message', data);
+  socket.on('message', function on_message(data) {
+    console.log('@:script:on_message', data);
     // debugger;
+  });
+  socket.on('connect_error', function connect_error(err) {
+    console.log('@:script:connect_error', err);
+    debugger;
   });
   socket.emit('join', { room: 'my_room' });
 });
