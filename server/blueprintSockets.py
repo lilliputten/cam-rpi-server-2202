@@ -46,8 +46,8 @@ def client_join_room(data):
     send('you have entered the room.', room=room)
 
 
-@blueprintSockets.route('/sockets/')
-@blueprintSockets.route('/sockets/<name>')
+@blueprintSockets.route('/sockets/start')
+@blueprintSockets.route('/sockets/start/<name>')
 def sockets_test(name=None):
     #  socketio.emit('message', 'Message: name: ' + str(name), room='my_room', broadcast=True)
     #  data = {'name': name}
@@ -55,8 +55,8 @@ def sockets_test(name=None):
     return render_template('sockets.html', name=name)
 
 
-@blueprintSockets.route('/msg/')
-@blueprintSockets.route('/msg/<name>')
+@blueprintSockets.route('/sockets/msg/')
+@blueprintSockets.route('/sockets/msg/<name>')
 def send_message(name=None):
     socketio.emit('message', 'Server: name: ' + name, room='my_room', broadcast=True)
     data = {'name': name}
