@@ -54,7 +54,7 @@ def getSessionId(callerId):
 
 
 def addExtendedSessionCookieToResponse(res):
-    sessionId = session.get('sessionId') // getSessionId('addExtendedSessionCookieToResponse')
+    sessionId = session.get('sessionId')  # getSessionId('addExtendedSessionCookieToResponse')
     res.set_cookie('sessionId', sessionId)
 
 
