@@ -67,10 +67,15 @@ def route_start():
 @blueprintSession.route('/session/set_name/<name>')
 def route_set_name(name=None):
     fromId = '@:blueprintSession:route_set_name'
+    dataPre = {
+        'pre:sessionId': appSession.getSessionId(),
+        'pre:sessionNew': appSession.session.get('sessionNew'),
+        'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
+    }
     sessionId = appSession.getSessionId()
     sessionNew = appSession.session.get('sessionNew')
     sessionLastAccess = appSession.session.get('sessionLastAccess')
-    data = {
+    dataNew = {
         'fromId': fromId,
         'name': name,
         'sessionId': sessionId,
@@ -81,7 +86,8 @@ def route_set_name(name=None):
     }
     sharedVars['name'] = name
     appSession.session['name'] = name
-    data['newName'] = appSession.session.get('name')
+    dataNew['newName'] = appSession.session.get('name')
+    data = {**dataPre, **dataNew}
     DEBUG(fromId, data)
     res = jsonify(data)
     appSession.addExtendedSessionCookieToResponse(res)
@@ -98,16 +104,17 @@ def route_set_name(name=None):
 @blueprintSession.route('/session/get_name')
 def route_get_name():
     fromId = '@:blueprintSession:route_get_name'
-    DEBUG(fromId + ': check old session', {
-        'sessionId': appSession.getSessionId(),
-        'sessionNew': appSession.session.get('sessionNew'),
-        'sessionLastAccess': appSession.session.get('sessionLastAccess'),
-    })
+    dataPre = {
+        'pre:sessionId': appSession.getSessionId(),
+        'pre:sessionNew': appSession.session.get('sessionNew'),
+        'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
+    }
+    DEBUG(fromId + ': check old session', )
     name = appSession.session.get('name')
     sessionId = appSession.getSessionId()
     sessionNew = appSession.session.get('sessionNew')
     sessionLastAccess = appSession.session.get('sessionLastAccess')
-    data = {
+    dataNew = {
         'fromId': fromId,
         'name': name,
         'sessionId': sessionId,
@@ -116,6 +123,7 @@ def route_get_name():
         #  'old sharedVars.name': sharedVars['name'],
         #  'old session:name': appSession.session.get('name'),
     }
+    data = {**dataPre, **dataNew}
     DEBUG(fromId, data)
     res = jsonify(data)
     appSession.addExtendedSessionCookieToResponse(res)
