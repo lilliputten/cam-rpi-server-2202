@@ -105,11 +105,11 @@ def route_set_name(name=None):
 def route_get_name():
     fromId = '@:blueprintSession:route_get_name'
     dataPre = {
+        'pre:name': appSession.session.get('name'),
         'pre:sessionId': appSession.getSessionId(),
         'pre:sessionNew': appSession.session.get('sessionNew'),
         'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
     }
-    DEBUG(fromId + ': check old session', )
     name = appSession.session.get('name')
     sessionId = appSession.getSessionId()
     sessionNew = appSession.session.get('sessionNew')
