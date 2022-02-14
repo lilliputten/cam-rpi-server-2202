@@ -4,8 +4,7 @@
   "version": "0.0.3",
   "timetag": "220212-0302",
   "timestamp": "2022.02.12, 03:02",
-  "changed": "2022.01.22, 19:55",
-  "changed": "2022.02.06, 23:10",
+  "changed": "2022.02.14, 02:34",
   "private": true,
   "author": "lilliputten <igor@lilliputten.ru>",
   "license": "MIT",
@@ -15,6 +14,7 @@
   },
   "devDependencies": {
     "date-fns": "^2.28.0",
+    "eslint": "^8.9.0",
     "npm-package-user-scripts-list": "^0.1.10",
     "npm-run-all": "^4.1.5"
   },
@@ -25,6 +25,7 @@
     "increment-version": "echo --Increment patch version-- && node util-increment-version.js",
     "update-build-time": "echo --Update build timestamp-- && node util-update-build-time.js",
     "update-build-variables": "echo --Update build properties-- && sh util-update-build-variables.sh",
+    "lint": "echo --Lint source code-- && eslint . --ext js",
     "help": "echo --List all available script commands-- && npm-package-user-scripts-list"
   }
 }

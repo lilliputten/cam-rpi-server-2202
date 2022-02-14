@@ -4,6 +4,7 @@
 
 # Changelog
 
+- 2022.02.14, 04:45 -- Experimantal sessions support.
 - 2022.02.12, 04:52 -- Implemented simple socket.io tests. Relocated cdn files.
 - 2022.02.12, 02:58 -- v.0.0.3: Restrucured server application (extracted several blueprint modules for different apis).
 - 2022.02.08, 06:19 -- Device server shot creation method.

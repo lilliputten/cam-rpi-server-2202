@@ -32,7 +32,8 @@ if doInit:  # NOTE: Initializing only once (avoiding double initialization with 
     from . import serverUtils
     from .blueprintTest import blueprintTest
     from .blueprintShot import blueprintShot
-    from .blueprintSockets import blueprintSockets
+    from .blueprintSession import blueprintSession
+    #  from .blueprintSockets import blueprintSockets
 
     DEBUG('@:server: starting', {
         'doInit': doInit,
@@ -49,7 +50,8 @@ if doInit:  # NOTE: Initializing only once (avoiding double initialization with 
 
     app.register_blueprint(blueprintTest)
     app.register_blueprint(blueprintShot)
-    app.register_blueprint(blueprintSockets)
+    app.register_blueprint(blueprintSession)
+    #  app.register_blueprint(blueprintSockets)
 
     # Errors handling...
 

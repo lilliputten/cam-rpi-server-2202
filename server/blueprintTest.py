@@ -7,10 +7,15 @@
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
 from . import pathmagic  # noqa
 
-from flask import Blueprint
-from flask import render_template
-#  from flask import redirect
+#  from flask import Blueprint
 #  from flask import render_template
+#  from flask import (
+#  )
+from flask import jsonify
+from flask import session
+from flask import Blueprint
+#  from flask import redirect
+from flask import render_template
 #  from flask import url_for
 #  from flask import jsonify
 #  from flask import request
@@ -18,7 +23,11 @@ from flask import render_template
 #  from config import config
 
 from .logger import DEBUG
+#  from .app import app
 
+#  from flask import session
+
+#  session.init_app(app)
 
 blueprintTest = Blueprint('blueprintTest', __name__)
 
@@ -31,17 +40,21 @@ blueprintTest = Blueprint('blueprintTest', __name__)
 # Tests...
 
 
-@blueprintTest.route('/')
-def route_root():
+sharedVars = {
+    'name': None,
+}
+
+
+@blueprintTest.route('/<name>')
+def route_root(name=None):
     #  return '<p>Hello, World!</p>'
-    return 'blueprintTest:route_root'
-    #  name = 'guest'
-    #  return render_template('hello.html', name=name)
-
-
-@blueprintTest.route('/hello/')
-@blueprintTest.route('/hello/<name>')
-def route_hello(name=None):
+    fromId = '@:blueprintTest:route_root'
+    data = {
+        'fromId': fromId,
+        'name': name,
+    }
+    DEBUG(fromId, data)
+    #  return 'blueprintTest:route_root: ' + session.get('name', '')
     return render_template('hello.html', name=name)
 
 

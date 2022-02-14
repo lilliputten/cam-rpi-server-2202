@@ -2,6 +2,7 @@
 # Config, content and system-related stuff...
 .*
 node_modules/
+/static/local-cdn/
 public/
 build/
 bundles/
