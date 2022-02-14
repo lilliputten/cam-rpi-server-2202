@@ -69,11 +69,11 @@ def route_set_name(name=None):
     fromId = '@:blueprintSession:route_set_name'
     dataPre = {
         'pre:name': appSession.session.get('name'),
-        'pre:sessionId': appSession.getSessionId(),
+        'pre:sessionId': appSession.session.get('sessionId'),
         'pre:sessionNew': appSession.session.get('sessionNew'),
         'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
     }
-    sessionId = appSession.getSessionId()
+    sessionId = appSession.getSessionId('route_set_name')
     sessionNew = appSession.session.get('sessionNew')
     sessionLastAccess = appSession.session.get('sessionLastAccess')
     dataNew = {
@@ -107,12 +107,12 @@ def route_get_name():
     fromId = '@:blueprintSession:route_get_name'
     dataPre = {
         'pre:name': appSession.session.get('name'),
-        'pre:sessionId': appSession.getSessionId(),
+        'pre:sessionId': appSession.session.get('sessionId'),
         'pre:sessionNew': appSession.session.get('sessionNew'),
         'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
     }
     name = appSession.session.get('name')
-    sessionId = appSession.getSessionId()
+    sessionId = appSession.getSessionId('route_get_name')
     sessionNew = appSession.session.get('sessionNew')
     sessionLastAccess = appSession.session.get('sessionLastAccess')
     dataNew = {

@@ -26,7 +26,7 @@ useSimplifiedSessionId = config['isDev']
 #  })
 
 
-def getSessionId():
+def getSessionId(callerId):
     sessionId = session.get('sessionId')
     now = datetime.datetime.now()  # Get current date object
     timestamp = getMsTimeStamp(now)  # Get milliseconds timestamp (for technical usage)
@@ -35,6 +35,7 @@ def getSessionId():
         sesseionIdValue = random.randint(100000, 10000000) if useSimplifiedSessionId else uuid.uuid4()
         sessionId = dateTag + '-' + str(sesseionIdValue)
         DEBUG('@:appSession:getSessionId: new session id', {
+            'callerId': callerId,
             'sessionId': sessionId,
             #  'sessionIdObj': sessionIdObj,
         })
@@ -42,6 +43,7 @@ def getSessionId():
         session['sessionNew'] = True
     else:
         DEBUG('@:appSession:getSessionId: using exists session id', {
+            'callerId': callerId,
             'sessionId': sessionId,
         })
         session['sessionNew'] = False
@@ -52,7 +54,7 @@ def getSessionId():
 
 
 def addExtendedSessionCookieToResponse(res):
-    sessionId = getSessionId()
+    sessionId = session.get('sessionId') // getSessionId('addExtendedSessionCookieToResponse')
     res.set_cookie('sessionId', sessionId)
 
 
