@@ -1,0 +1,33 @@
+greenlet.error: cannot switch to a different thread
+Sat Feb 12 06:22:37 2022 <timer at 0x7f7ed4401408 callback=<built-in method throw of greenlet.greenlet object at 0x7f7ed69202a8> args=(<class 'queue.Empty'>,)> failed with error
+
+mod_wsgi (pid=17658): Exception occurred processing WSGI script '/home/g/goldenjeru/lilliputten.ru/cam-rpi-server/index.wsgi'.
+Traceback (most recent call last):
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/flask/app.py", line 2309, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/flask_socketio/__init__.py", line 44, in __call__
+    start_response)
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/socketio/server.py", line 597, in handle_request
+    return self.eio.handle_request(environ, start_response)
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/engineio/server.py", line 412, in handle_request
+    environ, start_response)
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/engineio/socket.py", line 110, in handle_get_request
+    packets = self.poll()
+  File "/home/g/goldenjeru/.venv-py3-flask/lib/python3.6/site-packages/engineio/socket.py", line 30, in poll
+    timeout=self.server.ping_interval + self.server.ping_timeout)]
+  File "/usr/lib64/python3.6/site-packages/gevent/queue.py", line 284, in get
+    return self.__get_or_peek(self._get, block, timeout)
+  File "/usr/lib64/python3.6/site-packages/gevent/queue.py", line 261, in __get_or_peek
+    result = waiter.get()
+  File "/usr/lib64/python3.6/site-packages/gevent/hub.py", line 899, in get
+    return self.hub.switch()
+  File "/usr/lib64/python3.6/site-packages/gevent/hub.py", line 630, in switch
+    return RawGreenlet.switch(self)
+gevent.hub.LoopExit: ('This operation would block forever', <Hub at 0x7f7ed4449508 epoll default pending=0>)
+\x1b[32m[1644636194510 2022.02.12-06:23:14.510]\x1b[0m
+\x1b[31m@:blueprintSockets:sockets_start\x1b[0m
+  from: '@:blueprintSockets:sockets_start'
+  name: User
+

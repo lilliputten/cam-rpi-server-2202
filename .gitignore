@@ -6,9 +6,7 @@
 
 # Auto-generated files
 uploads
-log*.txt
-*.log
-log-gunicorn.*
+log*
 
 # Unused & temp files
 \!UNUSED
