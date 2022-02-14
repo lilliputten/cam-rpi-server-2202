@@ -48,13 +48,13 @@ def route_start():
     #  name = 'guest'
     fromId = '@:blueprintSession:route_start'
     sessionId = appSession.getSessionId()
-    name = appSession.session.get('name', '')
+    name = appSession.session.get('name')
     data = {
         'fromId': fromId,
         'sessionId': sessionId,
         #  'name': name,
         'sharedVars.name': sharedVars['name'],
-        'session:name': appSession.session.get('name', ''),
+        'session:name': appSession.session.get('name'),
     }
     DEBUG(fromId, data)
     #  sharedVars['name'] = name
@@ -77,7 +77,7 @@ def route_set_name(name=None):
         'sessionNew': sessionNew,
         'sessionLastAccess': sessionLastAccess,
         #  'old sharedVars.name': sharedVars['name'],
-        'old session:name': appSession.session.get('name', ''),
+        'old session:name': appSession.session.get('name'),
     }
     sharedVars['name'] = name
     appSession.session['name'] = name
@@ -109,7 +109,7 @@ def route_get_name():
         'sessionNew': sessionNew,
         'sessionLastAccess': sessionLastAccess,
         #  'old sharedVars.name': sharedVars['name'],
-        #  'old session:name': appSession.session.get('name', ''),
+        #  'old session:name': appSession.session.get('name'),
     }
     DEBUG(fromId, data)
     res = jsonify(data)

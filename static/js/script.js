@@ -70,7 +70,7 @@ function getName(name) {
       data,
     });
     // debugger;
-    name_input.val(name);
+    name_input.val(name || '');
   });
 }
 
