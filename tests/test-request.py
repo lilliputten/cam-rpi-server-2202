@@ -2,7 +2,12 @@
 # @module test-request.py
 # @desc Test local/remote requests using session cookies.
 # @since 2022.02.14, 06:07
-# @changed 2022.02.14, 07:25
+# @changed 2022.02.14, 06:39
+
+# wget cookie-supported request samples:
+# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-local.txt --load-cookies log-cookies-local.txt --progress=dot:default --no-check-certificate http://localhost:5000/session/set_name/aaa
+# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-remote.txt --load-cookies log-cookies-remote.txt --progress=dot:default --no-check-certificate https://cam-rpi-server.lilliputten.ru/session/set_name/aaa
+
 
 #  import traceback
 import requests
@@ -33,7 +38,7 @@ testUrlPrefix = 'https://cam-rpi-server.lilliputten.ru'
 def convertCookiesToString(cookies):
     if not cookies:
         return ''
-    return '; '.join([str(x)+'='+str(y) for x, y in cookies.items()])
+    return '; '.join([str(id)+'='+str(val) for id, val in cookies.items()])
 
 
 def saveCookiesToFile(requestsSession):
@@ -53,6 +58,7 @@ def makeRequest(requestsSession, url):
     try:
         DEBUG('test-request:makeRequest: request starting', {
             'url': url,
+            # NOTE: Here may cookies for several domains.
             'requestsSession.cookies': convertCookiesToString(requestsSession.cookies),
         })
         # Make request...
@@ -126,7 +132,7 @@ def testRequest(requestsSession, url):
 
 def testRequests(requestsSession):
     loadCookiesFileFile(requestsSession)
-    testRequest(requestsSession, testUrlPrefix + '/session/set_name/eee')
+    testRequest(requestsSession, testUrlPrefix + '/session/set_name/ddd')
     time.sleep(3)
     testRequest(requestsSession, testUrlPrefix + '/session/get_name')
     saveCookiesToFile(requestsSession)

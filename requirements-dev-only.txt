@@ -1,0 +1,4 @@
+# Additional requirements for dev-environment; see also `.flaskenv*` files.
+# vim: ft=conf
+
+python-dotenv==0.10.1
