@@ -54,8 +54,9 @@ def getSessionId(callerId):
 
 
 def addExtendedSessionCookieToResponse(res):
-    sessionId = session.get('sessionId')  # getSessionId('addExtendedSessionCookieToResponse')
-    res.set_cookie('sessionId', sessionId)
+    sessionId = session.get('sessionId', '')  # getSessionId('addExtendedSessionCookieToResponse')
+    if sessionId:
+        res.set_cookie('sessionId', sessionId)
 
 
 __all__ = [  # Exporting objects...

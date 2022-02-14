@@ -11,6 +11,7 @@ from flask import jsonify
 #  from flask import session
 from flask import Blueprint
 from flask import render_template
+from flask import make_response
 from . import appSession
 #  from flask import Blueprint
 #  from flask import render_template
@@ -47,7 +48,7 @@ def route_start():
     #  return 'blueprintSession:route_root'
     #  name = 'guest'
     fromId = '@:blueprintSession:route_start'
-    sessionId = appSession.getSessionId()
+    sessionId = appSession.getSessionId('route_start')
     name = appSession.session.get('name')
     data = {
         'fromId': fromId,
@@ -59,9 +60,14 @@ def route_start():
     DEBUG(fromId, data)
     #  sharedVars['name'] = name
     #  appSession.session['name'] = name
-    res = render_template('hello.html', name=name)
+    res = make_response(render_template('hello.html', name=name))
     appSession.addExtendedSessionCookieToResponse(res)
     return res
+
+
+# Test cookies:
+# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-local.txt --load-cookies log-cookies-local.txt --progress=dot:default --no-check-certificate http://localhost:5000/session/set_name/aaa
+# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-remote.txt --load-cookies log-cookies-remote.txt --progress=dot:default --no-check-certificate https://cam-rpi-server.lilliputten.ru/session/set_name/aaa
 
 
 @blueprintSession.route('/session/set_name/<name>')
@@ -95,18 +101,11 @@ def route_set_name(name=None):
     return res
 
 
-# Test cookies response:
-# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies.txt --progress=dot:default --no-check-certificate http://localhost:5000/session/get_name && cat log-cookies.txt
-# Send request with cookies:
-# --load-cookies file
-# wget -T 30 -t 1 -O- --save-headers --load-cookies log-cookies.txt --keep-session-cookies --progress=dot:default --no-check-certificate http://localhost:5000/session/get_name && cat log-cookies.txt
-
-
 @blueprintSession.route('/session/get_name')
 def route_get_name():
     fromId = '@:blueprintSession:route_get_name'
     dataPre = {
-        'pre:name': appSession.session.get('name'),
+        #  'pre:name': appSession.session.get('name'),
         'pre:sessionId': appSession.session.get('sessionId'),
         'pre:sessionNew': appSession.session.get('sessionNew'),
         'pre:sessionLastAccess': appSession.session.get('sessionLastAccess'),
@@ -117,7 +116,7 @@ def route_get_name():
     sessionLastAccess = appSession.session.get('sessionLastAccess')
     dataNew = {
         'fromId': fromId,
-        'new:name': name,
+        'name': name,
         'new:sessionId': sessionId,
         'new:sessionNew': sessionNew,
         'new:sessionLastAccess': sessionLastAccess,

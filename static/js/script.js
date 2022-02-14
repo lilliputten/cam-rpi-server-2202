@@ -4,45 +4,6 @@
  */
 /* eslint-disable no-console */
 
-/* // UNUSED: testRequest
- * function testRequest() {
- *   var requestUrl = '/hello/ccc';
- *   // var sendData = { test: 1 };
- *   console.log('@:testRequest:', requestUrl);
- *   makeRequest(requestUrl)
- *     .then(function fetch_success_data(data) {
- *       console.log('@:testRequest:makeRequest:success', data);
- *       debugger;
- *       return data;
- *     })
- *     .catch(function fetch_error(error) {
- *       console.error('@:testRequest:makeRequest:error', error);
- *       debugger;
- *     })
- *   ;
- * }
- */
-/* // UNUSED: testSockets
- * function testSockets() {
- *   NOTE 2022.02.14, 00:57 -- Sockets is unused due to remote-server installation
- *   var socket = io.connect('/');
- *   console.log('@:testSockets', {
- *     io: typeof io,
- *     socket: socket,
- *   });
- *   // this is a callback that triggers when the "message" event is emitted by the server.
- *   socket.on('message', function on_message(data) {
- *     console.log('@:testSockets:on_message', data);
- *     // debugger;
- *   });
- *   socket.on('connect_error', function connect_error(err) {
- *     console.log('@:testSockets:connect_error', err);
- *     // debugger;
- *   });
- *   socket.emit('join', { room: 'my_room' });
- * }
- */
-
 function setName(name) {
   console.log('@:setName', { name });
   makeRequest('/session/set_name/' + name).then(data => {
@@ -79,7 +40,9 @@ function getName(name) {
 $(document).ready(function start() {
   const get_name_button = $('#get_name');
   const set_name_button = $('#set_name');
+  const allCookies = document.cookie;
   console.log('@:start', {
+    allCookies,
     get_name_button,
     set_name_button,
   });
@@ -92,6 +55,7 @@ $(document).ready(function start() {
 /// Helper functions...
 
 function makeRequest(requestUrl) {
+  // NOTE 2022.02.14, 05:54 -- Js fetch is automatically uses actual cookies and updates it after request.
   // var requestUrl = '/session/start'; // 'hello/test';
   // var sendData = { test: 1 };
   console.log('@:makeRequest:', {
@@ -174,3 +138,44 @@ function makeRequest(requestUrl) {
     return Promise.resolve(error);
   }
 }
+
+/// Unused tests...
+
+/* // UNUSED: testRequest
+ * function testRequest() {
+ *   var requestUrl = '/hello/ccc';
+ *   // var sendData = { test: 1 };
+ *   console.log('@:testRequest:', requestUrl);
+ *   makeRequest(requestUrl)
+ *     .then(function fetch_success_data(data) {
+ *       console.log('@:testRequest:makeRequest:success', data);
+ *       debugger;
+ *       return data;
+ *     })
+ *     .catch(function fetch_error(error) {
+ *       console.error('@:testRequest:makeRequest:error', error);
+ *       debugger;
+ *     })
+ *   ;
+ * }
+ */
+/* // UNUSED: testSockets
+ * function testSockets() {
+ *   NOTE 2022.02.14, 00:57 -- Sockets is unused due to remote-server installation
+ *   var socket = io.connect('/');
+ *   console.log('@:testSockets', {
+ *     io: typeof io,
+ *     socket: socket,
+ *   });
+ *   // this is a callback that triggers when the "message" event is emitted by the server.
+ *   socket.on('message', function on_message(data) {
+ *     console.log('@:testSockets:on_message', data);
+ *     // debugger;
+ *   });
+ *   socket.on('connect_error', function connect_error(err) {
+ *     console.log('@:testSockets:connect_error', err);
+ *     // debugger;
+ *   });
+ *   socket.emit('join', { room: 'my_room' });
+ * }
+ */
