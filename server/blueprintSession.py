@@ -77,9 +77,10 @@ def route_set_name(name=None):
         #  'old sharedVars.name': sharedVars['name'],
         'old session:name': appSession.session.get('name', ''),
     }
-    DEBUG(fromId, data)
     sharedVars['name'] = name
     appSession.session['name'] = name
+    data['newName'] = appSession.session.get('name')
+    DEBUG(fromId, data)
     res = jsonify(data)
     #  res.set_cookie('sessionId', sessionId)
     #  appSession.addExtendedSessionCookieToResponse(res)
