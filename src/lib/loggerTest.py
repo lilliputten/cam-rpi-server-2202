@@ -1,4 +1,7 @@
 
+test = 1
+
+
 def DEBUG2(title, data=None):
     print(title, data)
 

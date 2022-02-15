@@ -1,3 +1,14 @@
 [flake8]
 max-line-length = 999
+exclude =
+    .venv,
+    .git,
+    .vscode,
+    node_modules,
+    __pycache__,
+    static,
+    temp,
+    utils,
+    Work,
+    UNUSED,
 /* https://flake8.pycqa.org/en/2.6.0/warnings.html */

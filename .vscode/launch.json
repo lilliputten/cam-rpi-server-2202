@@ -10,15 +10,37 @@
       "request": "launch",
       "module": "flask",
       "env": {
-        "FLASK_APP": "server/server.py:app",
-        "FLASK_ENV": "development",
+        // NOTE: Default options are parsed from `.flaskenv` file
+        // "FLASK_APP": "src/server.py:app",
+        // "FLASK_ENV": "development",
         // "FLASK_DEBUG": "0",
       },
       "args": [
         "run",
         //  "--no-debugger",
-        ],
+      ],
       "jinja": true
+    },
+    {
+      "name": "All python tests",
+      "type": "python",
+      "request": "launch",
+      "module": "unittest",
+      "args": [
+        "discover -f ./ -s ./src -p *_test.py",
+      ],
+    },
+    {
+      "name": "Specific python test (in args)",
+      "type": "python",
+      "request": "launch",
+      "module": "unittest",
+      "args": [
+        "-f",
+        "src/core/recordsStorage_test.py",
+        // "-k",
+        // "specific_tests",
+      ],
     },
     {
       "name": "Python: Current File",

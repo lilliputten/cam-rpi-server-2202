@@ -7,14 +7,12 @@
 # from . import pathmagic  # noqa
 
 import math
-#  import os
 from os import path
 import datetime
 import yaml
 from termcolor import colored
 
 from . import utils  # noqa
-#  import utils  # noqa
 
 from config import config
 
@@ -77,7 +75,7 @@ def DEBUG(title, data=None):
             fileMode = 'w'  # Clear file on first entry (wb)
         hasLoggedEntries = True
     if config['writeLog']:
-        rootPath = config['rootPath']  # os.getcwd()
+        rootPath = config['rootPath']
         logFile = path.join(rootPath, config['logFileName'])
         with open(logFile, fileMode) as file:
             file.write(header + '\n')
