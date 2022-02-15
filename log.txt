@@ -1,0 +1,25 @@
+[1644885283606 2022.02.15-03:34:43.606]
+@:appSession: starting
+  DEBUG2: !!python/name:src.loggerTest.DEBUG2 ''
+
+[1644885283606 2022.02.15-03:34:43.606]
+@:server: starting
+  buildTag: v.0.0.3-220212-0302
+  doInit: true
+  env: development
+  isDev: true
+  isMain: true
+  run_main: 'true'
+
+[1644885290176 2022.02.15-03:34:50.176]
+@:appSession:getSessionId: using exists session id
+  callerId: route_start
+  sessionId: 220214-054602-008-1297846
+
+[1644885290185 2022.02.15-03:34:50.185]
+@:blueprintSession:route_start
+  fromId: '@:blueprintSession:route_start'
+  session:name: eee
+  sessionId: 220214-054602-008-1297846
+  sharedVars.name: null
+

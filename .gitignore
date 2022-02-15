@@ -5,8 +5,8 @@
 /temp/*
 
 # Auto-generated files
-uploads
-log*
+/uploads
+/log-*
 
 # Unused & temp files
 \!UNUSED
