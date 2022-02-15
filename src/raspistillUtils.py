@@ -21,8 +21,8 @@ from config import config
 
 #  from config import config
 
-from .lib.logger import DEBUG
-from .lib import errors
+from src.lib.logger import DEBUG
+from src.lib import errors
 
 
 def sendImageFile(imgPath, mimeType='image/jpeg'):

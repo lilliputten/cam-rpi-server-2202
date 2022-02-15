@@ -10,7 +10,7 @@ from flask import Flask
 #  from flask import session
 from config import config
 from werkzeug.routing import BaseConverter
-#  from .lib.logger import DEBUG
+#  from src.lib.logger import DEBUG
 
 
 #  rootPath = config['rootPath']

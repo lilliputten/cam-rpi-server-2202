@@ -19,7 +19,7 @@ from flask import render_template
 
 #  from config import config
 
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 #  from .app import app
 
 #  from flask import session

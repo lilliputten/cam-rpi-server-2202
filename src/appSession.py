@@ -14,13 +14,13 @@ import uuid
 import random
 import datetime
 
-from src.lib.loggerTest import DEBUG2
+#  from src.lib.loggerTest import DEBUG2
 #  from . import recordsStorage
 #  from .recordsStorage import addRecord
 #  import .recordsStorage
 
 #  from .app import app
-from .lib.logger import (
+from src.lib.logger import (
     DEBUG,
     getMsDateTag,
     getMsTimeStamp,
@@ -30,7 +30,6 @@ useTimeStampInLastAccess = not config['isDev']
 useSimplifiedSessionId = config['isDev']
 
 DEBUG('@:appSession: starting', {
-    'DEBUG2': DEBUG2,
     #  'addRecord': recordsStorage.addRecord,
 })
 #  recordsStorage.addRecord('test', {'test': 1})

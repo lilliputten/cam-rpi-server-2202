@@ -14,8 +14,8 @@ from flask import jsonify
 #  from flask import render_template
 #  from flask import request
 #  from config import config
-from .lib.logger import DEBUG
-from .lib import errors
+from src.lib.logger import DEBUG
+from src.lib import errors
 
 
 def server_handle_not_found(err):

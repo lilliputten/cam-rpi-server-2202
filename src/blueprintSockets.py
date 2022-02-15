@@ -23,7 +23,7 @@ from .appSocketIO import appSocketIO
 #  from flask import url_for
 #  from flask import request
 
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 
 
 blueprintSockets = Blueprint('blueprintSockets', __name__)

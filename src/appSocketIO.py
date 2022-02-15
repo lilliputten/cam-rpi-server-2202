@@ -8,7 +8,7 @@
 # from . import pathmagic  # noqa
 
 from .app import app
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 from flask_socketio import SocketIO
 
 

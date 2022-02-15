@@ -11,7 +11,7 @@ import os
 from config import config
 #  from .appSocketIO import appSocketIO
 from .app import app
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 
 
 run_main = os.environ.get('WERKZEUG_RUN_MAIN')

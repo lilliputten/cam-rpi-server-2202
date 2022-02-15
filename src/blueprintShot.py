@@ -16,7 +16,7 @@ from flask import Blueprint
 
 from config import config
 
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 
 from . import raspistillUtils
 

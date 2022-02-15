@@ -19,7 +19,7 @@ from . import appSession
 
 #  from config import config
 
-from .lib.logger import DEBUG
+from src.lib.logger import DEBUG
 
 blueprintSession = Blueprint('blueprintSession', __name__)
 
