@@ -1,8 +1,8 @@
-[1644885283606 2022.02.15-03:34:43.606]
+[1644885822147 2022.02.15-03:43:42.147]
 @:appSession: starting
-  DEBUG2: !!python/name:src.loggerTest.DEBUG2 ''
+  DEBUG2: !!python/name:src.lib.loggerTest.DEBUG2 ''
 
-[1644885283606 2022.02.15-03:34:43.606]
+[1644885822151 2022.02.15-03:43:42.151]
 @:server: starting
   buildTag: v.0.0.3-220212-0302
   doInit: true
@@ -11,12 +11,12 @@
   isMain: true
   run_main: 'true'
 
-[1644885290176 2022.02.15-03:34:50.176]
+[1644885825536 2022.02.15-03:43:45.536]
 @:appSession:getSessionId: using exists session id
   callerId: route_start
   sessionId: 220214-054602-008-1297846
 
-[1644885290185 2022.02.15-03:34:50.185]
+[1644885825539 2022.02.15-03:43:45.539]
 @:blueprintSession:route_start
   fromId: '@:blueprintSession:route_start'
   session:name: eee
