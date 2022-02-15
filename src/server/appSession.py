@@ -5,25 +5,35 @@
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
 from . import pathmagic  # noqa
+#  import pathmagic  # noqa
 from config import config
+
+from flask import session
 
 import uuid
 import random
+import datetime
+
+from src.lib.loggerTest import DEBUG2
+from . import recordsStorage
+#  from .recordsStorage import addRecord
+#  import .recordsStorage
 
 #  from .app import app
-import datetime
 from .logger import (
     DEBUG,
     getMsDateTag,
     getMsTimeStamp,
 )
-from flask import session
 
 useTimeStampInLastAccess = not config['isDev']
 useSimplifiedSessionId = config['isDev']
 
-#  DEBUG('@:appSession: starting', {
-#  })
+DEBUG('@:appSession: starting', {
+    'DEBUG2': DEBUG2,
+    #  'addRecord': recordsStorage.addRecord,
+})
+#  recordsStorage.addRecord('test', {'test': 1})
 
 
 def getSessionId(callerId):
@@ -63,3 +73,6 @@ __all__ = [  # Exporting objects...
     'session',
     'getSessionId',
 ]
+
+if __name__ == '__main__':
+    print('@:appSession: debug run')

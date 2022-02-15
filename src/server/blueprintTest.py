@@ -9,10 +9,7 @@ from . import pathmagic  # noqa
 
 #  from flask import Blueprint
 #  from flask import render_template
-#  from flask import (
-#  )
-from flask import jsonify
-from flask import session
+#  from flask import session
 from flask import Blueprint
 #  from flask import redirect
 from flask import render_template
@@ -58,9 +55,11 @@ def route_root(name=None):
     return render_template('hello.html', name=name)
 
 
-@blueprintTest.route('/user/<username>')
-def route_user(username):
-    return 'blueprintTest: Raw html: User: %s' % username
+@blueprintTest.route('/user/<name>')
+def route_user(name):
+    return 'blueprintTest: Raw html: User: %s' % name
+    #  res = jsonify(data)
+    #  return res
 
 
 __all__ = [  # Exporting objects...

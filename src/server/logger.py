@@ -63,18 +63,19 @@ def createLogData(title, data=None):
     return logData
 
 
-loggedEntries = 0
+hasLoggedEntries = False
 
 
 def DEBUG(title, data=None):
-    global loggedEntries
+    global hasLoggedEntries
     header = createHeader()
     logData = createLogData(title, data)  # Ensure trailing newline for record delimiting
     fileMode = 'a'  # Default file mode: append (ab)
-    if loggedEntries == 0:
+    if not hasLoggedEntries:
         #  print('[Log started]\n'  # Insert empty line to stdout)
         if config['clearLogFile']:
             fileMode = 'w'  # Clear file on first entry (wb)
+        hasLoggedEntries = True
     if config['writeLog']:
         rootPath = config['rootPath']  # os.getcwd()
         logFile = path.join(rootPath, config['logFileName'])
@@ -90,7 +91,6 @@ def DEBUG(title, data=None):
         #  print(header)
         #  print(title)
         #  print(logData)
-    loggedEntries += 1
 
 
 __all__ = [  # Exporting objects...

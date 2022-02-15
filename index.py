@@ -24,7 +24,7 @@ sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server
 # Start application...
 #  from server.server import app as application  # noqa
 #  v.2?
-from server.server import app  # noqa
+from src.server.server import app as application  # noqa
 #  from server.server import appSocketIO as application  # noqa
 #  from .appSocketIO import appSocketIO
 
@@ -33,4 +33,5 @@ __all__ = [  # Exporting objects...
 ]
 
 if __name__ == '__main__':
-    application.run(app, debug=True, host='0.0.0.0')
+    application.run(debug=True, host='0.0.0.0')
+    #  application.run(app, debug=True, host='0.0.0.0')

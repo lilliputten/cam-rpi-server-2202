@@ -13,11 +13,8 @@ from flask import Blueprint
 from flask import render_template
 from flask import make_response
 from . import appSession
-#  from flask import Blueprint
-#  from flask import render_template
 #  from flask import redirect
 #  from flask import url_for
-#  from flask import jsonify
 #  from flask import request
 
 #  from config import config

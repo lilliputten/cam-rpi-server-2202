@@ -5,4 +5,4 @@
 # vim: ft=conf
 
 FLASK_ENV=development
-FLASK_APP=server/server.py:app
+FLASK_APP=src/server/server.py:app
