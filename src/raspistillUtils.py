@@ -15,15 +15,14 @@ from os import path
 from flask import send_file
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 
 from config import config
 
 #  from config import config
 
-from .logger import DEBUG
-#  from .errors import * as errors
-from . import errors
+from .lib.logger import DEBUG
+from .lib import errors
 
 
 def sendImageFile(imgPath, mimeType='image/jpeg'):

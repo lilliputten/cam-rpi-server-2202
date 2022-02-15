@@ -5,7 +5,7 @@
 # @changed 2022.02.14, 03:01
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 
 from flask import jsonify
 #  from flask import session
@@ -19,7 +19,7 @@ from . import appSession
 
 #  from config import config
 
-from .logger import DEBUG
+from .lib.logger import DEBUG
 
 blueprintSession = Blueprint('blueprintSession', __name__)
 

@@ -5,10 +5,10 @@
 # NOTE 2022.02.14, 00:57 -- Sockets is unused due to remote-server installation issues (gevent and eventlet cannot be correctly installed in shared apache hosting)
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 
 from .app import app
-from .logger import DEBUG
+from .lib.logger import DEBUG
 from flask_socketio import SocketIO
 
 

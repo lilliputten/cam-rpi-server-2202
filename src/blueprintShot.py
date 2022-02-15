@@ -5,7 +5,7 @@
 # @changed 2022.02.12, 01:46
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 
 from flask import Blueprint
 #  from flask import redirect
@@ -16,7 +16,7 @@ from flask import Blueprint
 
 from config import config
 
-from .logger import DEBUG
+from .lib.logger import DEBUG
 
 from . import raspistillUtils
 

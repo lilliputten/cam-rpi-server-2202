@@ -4,7 +4,7 @@
 # @changed 2022.02.12, 06:11
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 #  import pathmagic  # noqa
 from config import config
 
@@ -20,7 +20,7 @@ from src.lib.loggerTest import DEBUG2
 #  import .recordsStorage
 
 #  from .app import app
-from .logger import (
+from .lib.logger import (
     DEBUG,
     getMsDateTag,
     getMsTimeStamp,

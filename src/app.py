@@ -4,13 +4,13 @@
 # @changed 2022.02.07, 00:27
 
 #  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# from . import pathmagic  # noqa
 import os
 from flask import Flask
 #  from flask import session
 from config import config
 from werkzeug.routing import BaseConverter
-#  from .logger import DEBUG
+#  from .lib.logger import DEBUG
 
 
 #  rootPath = config['rootPath']

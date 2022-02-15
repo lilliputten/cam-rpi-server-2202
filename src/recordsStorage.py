@@ -5,7 +5,7 @@
 # @changed 2022.02.15, 01:38
 
 
-#  from .logger import DEBUG
+#  from .lib.logger import DEBUG
 
 
 #  recordsData = []
