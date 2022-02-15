@@ -14,8 +14,8 @@ import uuid
 import random
 import datetime
 
-from src.lib.loggerTest import DEBUG2
-from . import recordsStorage
+from .lib.loggerTest import DEBUG2
+#  from . import recordsStorage
 #  from .recordsStorage import addRecord
 #  import .recordsStorage
 

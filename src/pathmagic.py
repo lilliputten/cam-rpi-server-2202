@@ -15,8 +15,8 @@ currentFile = os.path.abspath(inspect.getfile(inspect.currentframe()))
 currPath = os.path.dirname(currentFile)
 parentPath = os.path.dirname(currPath)
 sys.path.insert(0, parentPath)
-rootPath = os.path.dirname(currPath)
-sys.path.insert(0, rootPath)
+#  rootPath = os.path.dirname(currPath)
+#  sys.path.insert(0, rootPath)
 
 # ALT:
 # os.path.dirname(os.path.realpath(__file__))
