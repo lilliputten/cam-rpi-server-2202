@@ -7,14 +7,14 @@
 
 import sys
 import os
-import inspect
+#  import inspect
 
 
-# NOTE: Add parent folder to imports list
-currentFile = os.path.abspath(inspect.getfile(inspect.currentframe()))
-currPath = os.path.dirname(currentFile)
-parentPath = os.path.dirname(currPath)
-sys.path.insert(0, parentPath)
+#  # NOTE: Add parent folder to imports list
+#  currentFile = os.path.abspath(inspect.getfile(inspect.currentframe()))
+#  currPath = os.path.dirname(currentFile)
+#  parentPath = os.path.dirname(currPath)
+#  sys.path.insert(0, parentPath)
 #  rootPath = os.path.dirname(currPath)
 #  sys.path.insert(0, rootPath)
 
