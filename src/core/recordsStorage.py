@@ -8,6 +8,7 @@
 import time
 
 from src.lib.logger import DEBUG
+from src.lib import utils
 
 
 #  class Test_recordsStorage(unittest.TestCase):
@@ -18,37 +19,36 @@ from src.lib.logger import DEBUG
 recordsData = []
 
 
-def addRecord(ownerId, data):
+def addRecord(ownerId='', recordId='', data={}):
     timestamp = time.time()
     recordData = {
         'timestamp': timestamp,
         'ownerId': ownerId,
+        'recordId': recordId,
         'data': data,
     }
-    fromId = '@:recordsStorage:addRecord'
+    #  fromId = '@:recordsStorage:addRecord'
     #  print(fromId, ownerId, data)
-    DEBUG(fromId, recordData)
+    DEBUG(utils.getTrace(), recordData)
     recordsData.append(recordData)
     return True
 
 
-def findRecord(ownerId, data):
-    timestamp = time.time()
-    recordData = {
-        'timestamp': timestamp,
+def findRecords(ownerId='', recordId=''):
+    #  funcName = traceback.extract_stack(None, 2)[0][2]
+    #  fromId = '@:recordsStorage:addRecord'
+    #  print(fromId, ownerId, data)
+    DEBUG(utils.getTrace(), {
         'ownerId': ownerId,
-        'data': data,
-    }
-    fromId = '@:recordsStorage:addRecord'
-    #  print(fromId, ownerId, data)
-    DEBUG(fromId, recordData)
-    recordsData.append(recordData)
-    return True
+        'recordId': recordId,
+    })
+    #  recordsData.append(recordData)
+    #  return True
 
 
-#  __all__ = [  # Exporting objects...
-#      'addRecord',
-#  ]
+__all__ = [  # Exporting objects...
+    'addRecord',
+]
 
 if __name__ == '__main__':
-    print('@:recordsData: debug run')
+    print(utils.getTrace(), 'debug run')

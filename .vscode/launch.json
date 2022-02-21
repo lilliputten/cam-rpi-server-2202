@@ -27,18 +27,23 @@
       "request": "launch",
       "module": "unittest",
       "args": [
-        "discover -f ./ -s ./src -p *_test.py",
+        "discover", // Find all test modules
+        "-f", // Stop on first fail
+        // "./", // Root path
+        "-s", "./src", // Search in path
+        "-t", "./", // Root project path
+        "-p", "*_test.py", // Search pattern
       ],
     },
     {
-      "name": "Specific python test (in args)",
+      "name": "One python test",
       "type": "python",
       "request": "launch",
       "module": "unittest",
       "args": [
         "-f",
         "src/core/recordsStorage_test.py",
-        // "-k",
+        // "-k", // Specific test search string with next parameter
         // "specific_tests",
       ],
     },

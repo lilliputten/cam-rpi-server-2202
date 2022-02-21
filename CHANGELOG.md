@@ -1,9 +1,10 @@
 <!--
-@changed 2022.02.15, 06:12
+@changed 2022.02.21, 23:06
 -->
 
 # Changelog
 
+- 2022.02.21, 23:06 -- Test support utilities (`getTrace`). Restuctured utils module.
 - 2022.02.15, 06:12 -- v.0.0.4: Created automatic tests & linters for python code.
 - 2022.02.15, 03:53 -- Helper modules moved to lib folder.
 - 2022.02.14, 04:45 -- Experimantal sessions support.

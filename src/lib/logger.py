@@ -12,7 +12,8 @@ import datetime
 import yaml
 from termcolor import colored
 
-from . import utils  # noqa
+# from . import utils
+from . import yamlSupport
 
 from config import config
 
@@ -50,7 +51,7 @@ def createHeader():
 def createLogData(title, data=None):
     logData = ''
     if data is not None:
-        logData = yaml.dump(data, Dumper=utils.CustomYamlDumper, default_flow_style=False, indent=2)
+        logData = yaml.dump(data, Dumper=yamlSupport.CustomYamlDumper, default_flow_style=False, indent=2)
         logData = logData.replace('!!python/unicode ', '')
         logData = '  ' + logData.replace('\n', '\n  ').rstrip()  # Indent data
         if not logData.endswith('\n'):

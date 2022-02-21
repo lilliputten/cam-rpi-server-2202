@@ -11,31 +11,22 @@
 #  - `python -m unittest -f src/core/loggerTest_test.py`
 
 import unittest
-import traceback
 
 from src.lib.loggerTest import test
 #  from .loggerTest import test
+from src.lib import utils
+
+
 #  test = True
 
 
-def getTrace(str=None):
-    funcName = traceback.extract_stack(None, 2)[0][2]
-    strList = [
-        __name__,
-        funcName,
-        str,
-    ]
-    filteredList = list(filter(None, strList))
-    return ':'.join(filteredList)
-
-
-print('\nRunning tests for', getTrace())
+print('\nRunning tests for', utils.getTrace())
 
 
 class Test_loggerTest(unittest.TestCase):
 
     def test_case_1(self):
-        print('\nRunning test', getTrace())
+        print('\nRunning test', utils.getTrace())
         self.assertEqual(test, True)
 
 

@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
-# @module logger
+# @module utils
 # @since 2020.02.23, 02:18
-# @changed 2020.04.23, 03:48
+# @changed 2022.02.21, 22:21
 
 
-import yaml
+import traceback
 import re
 
 
@@ -14,11 +14,6 @@ def dictFromClass(cls):
         for (key, value) in cls.__dict__.items()
         #  if key not in _excluded_keys
     )
-
-
-# Yaml extending (TODO: Extract to separated module)...
-# See:
-# - https://www.programcreek.com/python/example/104725/yaml.add_representer
 
 
 def truncateLongString(s, maxLength=0):
@@ -32,41 +27,37 @@ def prepareLongString(s, maxLength=0):
     return truncateLongString(s, maxLength)
 
 
-class CustomYamlDumper(yaml.Dumper):
-
-    def increase_indent(self, flow=False, indentless=False):
-        return super(CustomYamlDumper, self).increase_indent(flow, False)
-
-
-def yamlReprStr(dumper, data):
-    hasNewlines = '\n' in data or '\r' in data
-    if (hasNewlines):  # Block style for long multiline strings...
-        useStyle = '|' if len(data) > 30 else '"'
-        return dumper.represent_scalar(u'tag:yaml.org,2002:str', data, style=useStyle)
-    elif re.search(r'["\'\\ /]', data):
-        #  style = '"' if "'" in data and '"' not in data else "'"
-        return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='\'')
-    else:
-        return dumper.represent_str(data)
-        #  return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='')
-
-
-yaml.add_representer(str, yamlReprStr)
-
-
-class BlockString:
-
-    # default constructor
-    def __init__(self, string, maxLength=0):
-        self.string = string
-        self.maxLength = maxLength
-
-    def prepareString(self):
-        return prepareLongString(self.string, self.maxLength)
+def getTrace(str=None):
+    # NOTE: Required to pass extracted traceback
+    traces = traceback.extract_stack(None, 2)
+    lastTrace = traces[0]
+    modPath = lastTrace[0]
+    modNameMatch = re.search(r'([^\\/]*).py$', modPath)
+    modName = modNameMatch.group(1) if modNameMatch else modPath
+    funcName = lastTrace[2]
+    strList = [
+        '@',
+        #  __name__,
+        modName,
+        funcName,
+        str,
+    ]
+    filteredList = list(filter(None, strList))
+    traceResult = ':'.join(filteredList)
+    #  print('@:testUtils:getTrace', {
+    #      #  'traceResult': traceResult,
+    #      #  'traces': traces,
+    #      #  'lastTrace': lastTrace,
+    #      #  'modPath': modPath,
+    #      'modName': modName,
+    #      'funcName': funcName,
+    #  })
+    return traceResult
 
 
-def reprBlockString(dumper, data):
-    return dumper.represent_scalar('tag:yaml.org,2002:str', data.prepareString(), style='|')
-
-
-yaml.add_representer(BlockString, reprBlockString)
+__all__ = [  # Exporting objects...
+    'dictFromClass',
+    'truncateLongString',
+    'prepareLongString',
+    'getTrace',
+]

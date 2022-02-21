@@ -4,7 +4,7 @@
   "version": "0.0.4",
   "timetag": "220215-0612",
   "timestamp": "2022.02.15, 06:12",
-  "changed": "2022.02.15, 05:13",
+  "changed": "2022.02.21, 22:49",
   "private": true,
   "author": "lilliputten <igor@lilliputten.ru>",
   "license": "MIT",
@@ -26,11 +26,11 @@
     "increment-version": "echo --Increment patch version-- && node util-increment-version.js",
     "update-build-time": "echo --Update build timestamp-- && node util-update-build-time.js",
     "update-build-variables": "echo --Update build properties-- && sh util-update-build-variables.sh",
-    "test": "echo --Run all tests-- && npm-run-all python-tests",
-    "lint": "echo --Run all linters-- && npm-run-all python-lint",
     "flask": "echo --Run python flask server (venv required)-- && cross-env FLASK_APP=src/server.py:app FLASK_ENV=development flask run",
     "python-tests": "echo --Run python tests (venv required)-- && python -m unittest discover -f ./ -s ./src -p *_test.py",
     "python-lint": "echo --Run python linter (venv required)-- && flake8 src",
+    "test": "echo --Run all tests-- && npm-run-all python-tests",
+    "lint": "echo --Run all linters-- && npm-run-all python-lint",
     "help": "echo --List all available script commands-- && npm-package-user-scripts-list"
   }
 }
