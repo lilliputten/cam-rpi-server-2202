@@ -27,10 +27,11 @@
     "update-build-time": "echo --Update build timestamp-- && node util-update-build-time.js",
     "update-build-variables": "echo --Update build properties-- && sh util-update-build-variables.sh",
     "flask": "echo --Run python flask server (venv required)-- && cross-env FLASK_APP=src/server.py:app FLASK_ENV=development flask run",
-    "python-tests": "echo --Run python tests (venv required)-- && python -m unittest discover -f ./ -s ./src -p *_test.py",
-    "python-lint": "echo --Run python linter (venv required)-- && flake8 src",
+    "python-tests": "echo --Run python tests (unittest, venv required)-- && python -m unittest discover -f -t . -s src -p *_test.py",
+    "python-lint": "echo --Run python linter (flake8, venv required)-- && flake8 src",
     "test": "echo --Run all tests-- && npm-run-all python-tests",
-    "lint": "echo --Run all linters-- && npm-run-all python-lint",
+    "eslint": "echo --Run js linter (eslint)-- && npx eslint static/js/**.js",
+    "lint": "echo --Run all linters-- && npm-run-all python-lint eslint",
     "help": "echo --List all available script commands-- && npm-package-user-scripts-list"
   }
 }
