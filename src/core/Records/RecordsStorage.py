@@ -2,8 +2,10 @@
 # @module RecordsStorage
 # @desc Extendable (?) records storage engine
 # @since 2022.02.22, 01:47
-# @changed 2022.02.22, 02:25
+# @changed 2022.02.23, 00:01
 
+
+import time
 
 from src.lib.logger import DEBUG
 from src.lib import utils
@@ -11,9 +13,17 @@ from src.lib import utils
 from .Record import Record
 
 
+defaultRelevanceTime = 10
+
+
 class RecordsStorage():
 
+    relevanceTime = defaultRelevanceTime
     recordsData = []
+
+    def __init__(self, relevanceTime=None):
+        if relevanceTime:
+            self.relevanceTime = relevanceTime
 
     def clearRecordsData(self):
         #  self.recordsData = []
@@ -58,7 +68,17 @@ class RecordsStorage():
         #  })
         return self.addRecordObject(record)
 
-    def testRecord(self, record, ownerId=None, recordId=None, customFunc=None):
+    def isRecordOutdated(self, record):
+        """
+        Test record outdated.
+        Returns bool value: True if record is outdated (can be removed).
+        TODO: To use `Record.isOutdated`?
+        """
+        if not record or not record.timestamp or (time.time() - record.timestamp) >= self.relevanceTime:
+            return True
+        return False
+
+    def isRecordMatched(self, record, ownerId=None, recordId=None, customFunc=None):
         """
         Compare record with parameters:
         - `ownerId`: string,
@@ -83,33 +103,16 @@ class RecordsStorage():
         #  })
         return isFound
 
-    def removeRecordsByPos(self, posList):
+    def processRecords(self, ownerId=None, recordId=None, customFunc=None, removeFound=False, removeOutdated=True):
         """
-        Remove records specified by their positions in list.
-        Nothing returned.
-        """
-        # Iterate upside-down and remove records by positions from tail...
-        sortedPos = sorted(posList, reverse=True)
-        #  DEBUG(utils.getTrace(' start'), {
-        #      'sortedPos': sortedPos,
-        #      'posList': posList,
-        #      'recordsData': self.recordsData,
-        #  })
-        for pos in sortedPos:
-            del self.recordsData[pos]
-        #  DEBUG(utils.getTrace(' done'), {
-        #      'sortedPos': sortedPos,
-        #      'posList': posList,
-        #      'recordsData': self.recordsData,
-        #  })
-
-    def findRecordsWithPositions(self, ownerId=None, recordId=None, customFunc=None):
-        """
-        Low-level method for records finding.
-        Found conditions specified with parameters (see `testRecord`, all of them are optional):
+        Main low-level method for records finding and processing.
+        Found conditions specified with parameters (see `isRecordMatched`, all of them are optional):
         - `ownerId`: string,
         - `recordId`: string,
         - `customFunc`: def or lambda with `record` parameter.
+        Remove parameters:
+        - `removeFound` -- Remove found records (default is False).
+        - `removeOutdated` -- Remove outdated records (default is True).
         Returns tuple of `records`, `positions`: crsp found records and their positions in list.
         """
         #  DEBUG(utils.getTrace(' start'), {
@@ -117,56 +120,36 @@ class RecordsStorage():
         #      'ownerId': ownerId,
         #      'recordId': recordId,
         #      'customFunc': customFunc,
+        #      'removeFound': removeFound,
+        #      'removeOutdated': removeOutdated,
         #  })
         records = []
-        positions = []
-        for pos in range(len(self.recordsData)):
+        # Scan records in reversed order (removing records from list's tail)
+        pos = len(self.recordsData) - 1
+        while pos >= 0:
             record = self.recordsData[pos]
-            isFound = self.testRecord(record, ownerId=ownerId, recordId=recordId, customFunc=customFunc)
+            isFound = self.isRecordMatched(record, ownerId=ownerId, recordId=recordId, customFunc=customFunc)
             if isFound:
                 #  DEBUG(utils.getTrace(' record found'), {
                 #      'pos': pos,
                 #      'record': record,
                 #  })
-                positions.append(pos)
-                records.append(record)
+                records.insert(0, record)  # Insert at begining of list ('coz scanning in reverse order)
+            # Remove record if neede...
+            if (isFound and removeFound) or (removeOutdated and self.isRecordOutdated(record)):
+                #  DEBUG(utils.getTrace(' record removing'), {
+                #      'pos': pos,
+                #      'record': record,
+                #      'isFound': isFound,
+                #  })
+                del self.recordsData[pos]
+            pos = pos - 1
         #  DEBUG(utils.getTrace(' done'), {
-        #      'positions': positions,
-        #      'records': records,
-        #  })
-        return records, positions
-
-    def findRecords(self, ownerId=None, recordId=None, customFunc=None, removeFound=False):
-        """
-        Core method for records fetching an removing.
-        Found conditions specified with parameters (all of them are optional):
-        - `ownerId`: string,
-        - `recordId`: string,
-        - `customFunc`: def or lambda with `record` parameter.
-        Compare function (`customFunc`) can be specified as lambda or def
-        If `removeFound` flag is specified, then found records are removed from storage.
-        Returns list of found records.
-        """
-        #  DEBUG(utils.getTrace('start'), {
-        #      'removeFound': removeFound,
-        #      'recordsData': self.recordsData,
-        #      'ownerId': ownerId,
-        #      'recordId': recordId,
-        #  })
-        # Find records and their positions...
-        records, positions = self.findRecordsWithPositions(ownerId=ownerId, recordId=recordId, customFunc=customFunc)
-        # Remove found records if `removeFound` flag specified...
-        if removeFound and positions and len(positions):
-            self.removeRecordsByPos(positions)
-        #  DEBUG(utils.getTrace('done'), {
-        #      'removeFound': removeFound,
-        #      'recordsData': self.recordsData,
-        #      'positions': positions,
         #      'records': records,
         #  })
         return records
 
-    def getRecords(self, ownerId=None, recordId=None, customFunc=None):
+    def findRecords(self, ownerId=None, recordId=None, customFunc=None):
         """
         Find-only records with conditions (all parameters are optional):
         - `ownerId`: string,
@@ -174,7 +157,7 @@ class RecordsStorage():
         - `customFunc`: def or lambda with `record` parameter.
         Returns found records list.
         """
-        return self.findRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=False)
+        return self.processRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=False)
 
     def extractRecords(self, ownerId=None, recordId=None, customFunc=None):
         """
@@ -184,7 +167,7 @@ class RecordsStorage():
         - `customFunc`: def or lambda with `record` parameter.
         Returns found (and removed) records list.
         """
-        return self.findRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=True)
+        return self.processRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=True)
 
     def removeRecords(self, ownerId=None, recordId=None, customFunc=None):
         """
@@ -192,12 +175,18 @@ class RecordsStorage():
         - `ownerId`: string,
         - `recordId`: string,
         - `customFunc`: def or lambda with `record` parameter.
-        Returns removed records list.
         """
-        return self.extractRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc)
+        self.extractRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc)
+
+    def removeOutdatedRecords(self):
+        """
+        Remove outdated records.
+        """
+        self.processRecords(removeOutdated=True)
 
 
 __all__ = [  # Exporting objects...
+    'defaultRelevanceTime',
     'RecordsStorage',
 ]
 

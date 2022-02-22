@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @module RecordsStorage_test
 # @since 2022.02.22, 01:47
-# @changed 2022.02.22, 02:03
+# @changed 2022.02.23, 00:01
 
 # @see https://docs.python.org/3/library/unittest.html
 
@@ -9,6 +9,7 @@
 #  - `npm run -s python-tests -- -k RecordsStorage`
 #  - `python -m unittest -f src/core/Records/RecordsStorage_test.py`
 
+import time
 import unittest
 import functools
 
@@ -21,7 +22,9 @@ from src.lib import utils
 print('\nRunning tests for', utils.getTrace())
 
 
-recordsStorage = RecordsStorage()
+relevanceTime = 10
+
+recordsStorage = RecordsStorage(relevanceTime)
 
 
 class Test_recordsStorage(unittest.TestCase):
@@ -52,6 +55,28 @@ class Test_recordsStorage(unittest.TestCase):
         #  self.assertEqual(len(recordsStorage.recordsData), 1)
         self.assertEqual(recordsStorage.getRecordsCount(), 1)
 
+    def test_removeOutdated(self):
+        """
+        Test of explicitly removing outdated records.
+        """
+        print('\nRunning test', utils.getTrace())
+        timestamp = time.time() - relevanceTime  # Add 'obsolete' record
+        recordsStorage.addRecord(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
+        recordsStorage.removeOutdatedRecords()  # Expilitly remove outdated records.
+        recordsCount = recordsStorage.getRecordsCount()
+        self.assertEqual(recordsCount, 0)
+
+    def test_removeOutdatedDuringFind(self):
+        """
+        Test of implicitly (during find) removing outdated records.
+        """
+        print('\nRunning test', utils.getTrace())
+        timestamp = time.time() - relevanceTime  # Add 'obsolete' record
+        recordsStorage.addRecord(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
+        recordsStorage.findRecords(ownerId='ABSENT')  # Try to find absent records. Outdated records musr be removed.
+        recordsCount = recordsStorage.getRecordsCount()
+        self.assertEqual(recordsCount, 0)
+
     def test_getRecords(self):
         """
         Test of getting of records by parameter (`ownerId`).
@@ -59,7 +84,7 @@ class Test_recordsStorage(unittest.TestCase):
         print('\nRunning test', utils.getTrace())
         recordsStorage.addRecord(ownerId='test', data={'value': 'must be found'})
         recordsStorage.addRecord(ownerId='other', data={'value': 222})
-        foundRecords = recordsStorage.getRecords(ownerId='test')
+        foundRecords = recordsStorage.findRecords(ownerId='test')
         self.assertEqual(len(foundRecords), 1)
 
     def test_getRecordsWithCustomFunc(self):
@@ -74,33 +99,32 @@ class Test_recordsStorage(unittest.TestCase):
         #      return isFound
         recordsStorage.addRecord(ownerId='test', data={'value': 'must be found'})
         recordsStorage.addRecord(ownerId='other', data={'value': 222})
-        foundRecords = recordsStorage.getRecords(customFunc=customFunc)
+        foundRecords = recordsStorage.findRecords(customFunc=customFunc)
         self.assertEqual(len(foundRecords), 1)
-
-    def test_extractRecords(self):
-        """
-        Test finding and removeing (extracting) of records by parameters (`ownerId`).
-        """
-        print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
-        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
-        foundRecords = recordsStorage.extractRecords(ownerId='test')
-        self.assertEqual(len(foundRecords), 2)
-        remainedRecordsCount = recordsStorage.getRecordsCount()
-        self.assertEqual(remainedRecordsCount, 2)
 
     def test_removeRecords(self):
         """
-        Test of removeing of records by parameters (`ownerId`).
+        Test of removing of records by parameters (`ownerId`).
         """
         print('\nRunning test', utils.getTrace())
         recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
         recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
         recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
         recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
-        removedRecords = recordsStorage.removeRecords(ownerId='test')
+        recordsStorage.removeRecords(ownerId='test')
+        remainedRecordsCount = recordsStorage.getRecordsCount()
+        self.assertEqual(remainedRecordsCount, 2)
+
+    def test_extractRecords(self):
+        """
+        Test of extracing (finding & removing) of records by parameters (`ownerId`).
+        """
+        print('\nRunning test', utils.getTrace())
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        removedRecords = recordsStorage.extractRecords(ownerId='test')
         # Check removed records...
         # 2 records must be removed...
         self.assertEqual(len(removedRecords), 2)

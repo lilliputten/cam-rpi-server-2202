@@ -1,9 +1,10 @@
 <!--
-@changed 2022.02.22, 02:30
+@changed 2022.02.23, 00:24
 -->
 
 # Changelog
 
+- 2022.02.23, 00:24 -- RecordsStorage: remove outdated records during findng (in `processRecords`), added metod for rorced remove of outdated records (`removeOutdatedRecords`).
 - 2022.02.22, 02:30 -- RecordsStorage, Record: Basic records and records storage routines and tests.
 - 2022.02.21, 23:06 -- Test support utilities (`getTrace`). Restuctured utils module.
 - 2022.02.15, 06:12 -- v.0.0.4: Created automatic tests & linters for python code.
