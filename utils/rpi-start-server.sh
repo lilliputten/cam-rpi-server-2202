@@ -16,16 +16,16 @@ GUNICORN="/home/pi/.local/bin/gunicorn"
 # Determine real project path (is required for crontab execution)...
 REALFILE=`realpath "$0"`
 REALDIR=`dirname "$REALFILE"`
-ROOT=`dirname "$REALDIR"`
+ROOTDIR=`dirname "$REALDIR"`
 
-PIDFILE="$ROOT/log-gunicorn.pid"
-LOGFILE="$ROOT/log-gunicorn.log"
+PIDFILE="$ROOTDIR/log-gunicorn.pid"
+LOGFILE="$ROOTDIR/log-gunicorn.log"
 
 # # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
 # test -f "$REALDIR/utils/config.sh" && . "$REALDIR/utils/config.sh"
 # test -f "$REALDIR/utils/config-local.sh" && . "$REALDIR/utils/config-local.sh"
 
-echo "Starting server in folder: $ROOT" # (via $REALFILE)"
+echo "Starting server in folder: $ROOTDIR" # (via $REALFILE)"
 
 # Is running instance exists?
 if [ -f "$PIDFILE" ]; then
@@ -44,7 +44,7 @@ fi
 
 # # Remove old log files...
 rm -f "$PIDFILE"
-# # "$ROOT/log*.txt" # NOTE: Remove log files?
+# # "$ROOTDIR/log*.txt" # NOTE: Remove log files?
 
 # Start daemon...
 echo -n "Starting daemon... " \
@@ -55,7 +55,7 @@ echo -n "Starting daemon... " \
   -D \
   -w 1 \
   -b 0.0.0.0:4000 \
-  --chdir "$ROOT" \
+  --chdir "$ROOTDIR" \
   --pid="$PIDFILE" \
   --log-file="$LOGFILE" \
   index \
