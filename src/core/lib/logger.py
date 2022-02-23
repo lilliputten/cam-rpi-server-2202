@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @module logger
 # @since 2020.02.23, 02:18
-# @changed 2022.02.14, 04:34
+# @changed 2022.02.24, 00:49
 
 #  import pathmagic  # noqa # Add parent path to import paths for import config in debug mode
 # from . import pathmagic  # noqa
@@ -12,18 +12,18 @@ import datetime
 import yaml
 from termcolor import colored
 
+from config import config
+
 # from . import utils
 from . import yamlSupport
-
-from config import config
 
 
 def getMsDateTag(now=None, isDetailed=False):
     if not now:
         now = datetime.datetime.now()  # Get current date object
     #  Format date like '2022.02.08-02:04:23.255157' or '220208-020423-255157'
-    format = config['detailedDateFormat'] if isDetailed else config['logDateFormat']
-    dateTag = now.strftime(format)
+    formatStr = config['detailedDateFormat'] if isDetailed else config['logDateFormat']
+    dateTag = now.strftime(formatStr)
     dateTag = dateTag[:-3]  # Convert microseconds (.NNNNNN) to milliseconds (.NNN)
     return dateTag
 
@@ -48,7 +48,7 @@ def createHeader():
     return header
 
 
-def createLogData(title, data=None):
+def createLogData(_title, data=None):
     logData = ''
     if data is not None:
         logData = yaml.dump(data, Dumper=yamlSupport.CustomYamlDumper, default_flow_style=False, indent=2)
@@ -66,7 +66,7 @@ hasLoggedEntries = False
 
 
 def DEBUG(title, data=None):
-    global hasLoggedEntries
+    global hasLoggedEntries  # pylint: disable=global-statement
     header = createHeader()
     logData = createLogData(title, data)  # Ensure trailing newline for record delimiting
     fileMode = 'a'  # Default file mode: append (ab)
@@ -78,7 +78,7 @@ def DEBUG(title, data=None):
     if config['writeLog']:
         rootPath = config['rootPath']
         logFile = path.join(rootPath, config['logFileName'])
-        with open(logFile, fileMode) as file:
+        with open(logFile, fileMode, encoding='utf-8') as file:
             file.write(header + '\n')
             file.write(title + '\n')
             file.write(logData + '\n')

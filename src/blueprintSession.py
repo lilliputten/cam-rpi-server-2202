@@ -4,22 +4,20 @@
 # @since 2022.02.14, 03:01
 # @changed 2022.02.14, 03:01
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-# from . import pathmagic  # noqa
-
 from flask import jsonify
 #  from flask import session
 from flask import Blueprint
 from flask import render_template
 from flask import make_response
-from . import appSession
 #  from flask import redirect
 #  from flask import url_for
 #  from flask import request
 
 #  from config import config
 
-from src.lib.logger import DEBUG
+from src.core.lib.logger import DEBUG
+
+from . import appSession
 
 blueprintSession = Blueprint('blueprintSession', __name__)
 
@@ -63,8 +61,15 @@ def route_start():
 
 
 # Test cookies:
-# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-local.txt --load-cookies log-cookies-local.txt --progress=dot:default --no-check-certificate http://localhost:5000/session/set_name/aaa
-# wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-remote.txt --load-cookies log-cookies-remote.txt --progress=dot:default --no-check-certificate https://cam-rpi-server.lilliputten.ru/session/set_name/aaa
+# pylint: disable=line-too-long
+# ```
+#     wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies log-cookies-local.txt --load-cookies log-cookies-local.txt --progress=dot:default --no-check-certificate http://localhost:5000/session/set_name/aaa
+#     wget -T 30 -t 1 -O- --save-headers --keep-session-cookies --save-cookies
+#     log-cookies-remote.txt --load-cookies log-cookies-remote.txt
+#     --progress=dot:default --no-check-certificate
+#     https://cam-rpi-server.lilliputten.ru/session/set_name/aaa
+# ```
+# pylint: enable=line-too-long
 
 
 @blueprintSession.route('/session/set_name/<name>')

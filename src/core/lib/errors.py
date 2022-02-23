@@ -1,11 +1,13 @@
 # -*- coding:utf-8 -*-
 # @module logger
 # @since 2020.02.23, 02:18
-# @changed 2022.02.08, 03:46
+# @changed 2022.02.24, 00:53
 
 
 import traceback
-import utils
+
+#  from . import utils
+from . import yamlSupport
 
 
 def toString(error, show_stacktrace=False):
@@ -24,7 +26,7 @@ def toString(error, show_stacktrace=False):
 
 def toBlockString(error):
     errorStr = toString(error)
-    return utils.BlockString(errorStr)
+    return yamlSupport.BlockString(errorStr)
 
 
 __all__ = [  # Exporting objects...

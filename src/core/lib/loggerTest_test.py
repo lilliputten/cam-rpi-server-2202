@@ -12,9 +12,9 @@
 
 import unittest
 
-from src.lib import utils
+from src.core.lib import utils
 
-#  from src.lib.loggerTest import test
+#  from src.core.lib.loggerTest import test
 from .loggerTest import test
 
 

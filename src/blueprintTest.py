@@ -4,9 +4,6 @@
 # @since 2022.02.12, 01:46
 # @changed 2022.02.12, 01:46
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-# from . import pathmagic  # noqa
-
 #  from flask import Blueprint
 #  from flask import render_template
 #  from flask import session
@@ -19,7 +16,7 @@ from flask import render_template
 
 #  from config import config
 
-from src.lib.logger import DEBUG
+from src.core.lib.logger import DEBUG
 #  from .app import app
 
 #  from flask import session
@@ -57,7 +54,8 @@ def route_root(name=None):
 
 @blueprintTest.route('/user/<name>')
 def route_user(name):
-    return 'blueprintTest: Raw html: User: %s' % name
+    #  return 'blueprintTest: Raw html: User: %s' % name
+    return f'blueprintTest: Raw html: User: {name}'
     #  res = jsonify(data)
     #  return res
 

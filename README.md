@@ -7,9 +7,9 @@
 
 ## Build info (auto-generated)
 
-- Version: 0.0.4
-- Last changes timestamp: 2022.02.15, 06:12
-- Last changes timetag: 220215-0612
+- Version: 0.0.5
+- Last changes timestamp: 2022.02.24, 00:55
+- Last changes timetag: 220224-0055
 
 
 ## API

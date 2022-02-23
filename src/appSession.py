@@ -3,36 +3,31 @@
 # @since 2022.02.07, 00:27
 # @changed 2022.02.15, 04:17
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-# from . import pathmagic  # noqa
-#  import pathmagic  # noqa
-from config import config
-
-from flask import session
-
 import uuid
 import random
 import datetime
 
-#  from src.lib.loggerTest import DEBUG2
-from src.core import recordsStorage
-#  from .recordsStorage import addRecord
-#  import .recordsStorage
+from flask import session
 
-#  from .app import app
-from src.lib.logger import (
-    DEBUG,
+from config import config
+
+from src.core.lib.logger import DEBUG
+from src.core.lib.logger import (
     getMsDateTag,
     getMsTimeStamp,
 )
 
+#  from src.core import RecordsStorage
+
 useTimeStampInLastAccess = not config['isDev']
 useSimplifiedSessionId = config['isDev']
 
-DEBUG('@:appSession: starting', {
-    'addRecord': recordsStorage.addRecord,
-})
-recordsStorage.addRecord('test', {'test': 1})
+#  # Test RecordsStorage...
+#  recordsStorage = RecordsStorage()
+#  DEBUG('@:appSession: starting', {
+#      'addRecord': recordsStorage.addRecord,
+#  })
+#  recordsStorage.addRecord('test', {'test': 1})
 
 
 def getSessionId(callerId):

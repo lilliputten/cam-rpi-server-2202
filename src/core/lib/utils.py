@@ -18,7 +18,7 @@ def dictFromClass(cls):
 
 def truncateLongString(s, maxLength=0):
     if maxLength and len(s) >= maxLength:
-        s = s[0:maxLength-3] + '...'
+        s = s[0:maxLength - 3] + '...'
     return s
 
 
@@ -27,7 +27,7 @@ def prepareLongString(s, maxLength=0):
     return truncateLongString(s, maxLength)
 
 
-def getTrace(str=None):
+def getTrace(appendStr=None):
     # NOTE: Required to pass extracted traceback
     traces = traceback.extract_stack(None, 2)
     lastTrace = traces[0]
@@ -40,7 +40,7 @@ def getTrace(str=None):
         #  __name__,
         modName,
         funcName,
-        str,
+        appendStr,
     ]
     filteredList = list(filter(None, strList))
     traceResult = ':'.join(filteredList)

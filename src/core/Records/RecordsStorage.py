@@ -2,15 +2,17 @@
 # @module RecordsStorage
 # @desc Extendable (?) records storage engine
 # @since 2022.02.22, 01:47
-# @changed 2022.02.23, 00:01
+# @changed 2022.02.24, 00:34
 
 
 import time
 
-from src.lib.logger import DEBUG
-from src.lib import utils
+from src.core.lib.logger import DEBUG
+from src.core.lib import utils
 
 from .Record import Record
+from .RecordOptions import FindOptions, RemoveOptions
+#  from . import RecordOptions
 
 
 defaultRelevanceTime = 10
@@ -35,13 +37,9 @@ class RecordsStorage():
     def getRecordsCount(self):
         return len(self.recordsData)
 
-    def addRecordObject(self, record):
+    def addRecordObject(self, record: Record):
         """
-        Add record with `Record` object instance:
-        - timestamp (number)
-        - ownerId (string)
-        - recordId (string)
-        - data (dict)
+        Add record with `Record` object instance.
         """
         #  DEBUG(utils.getTrace(), {
         #      'record': record,
@@ -49,7 +47,7 @@ class RecordsStorage():
         self.recordsData.append(record)
         return True
 
-    def addRecord(self, timestamp=None, ownerId=None, recordId=None, data=None):
+    def addRecordFromData(self, timestamp=None, ownerId=None, recordId=None, data=None):
         """
         Add record with raw data (all parameters are optional).
         The data converting to `Record` object instance (see `addRecordObject` above):
@@ -68,7 +66,7 @@ class RecordsStorage():
         #  })
         return self.addRecordObject(record)
 
-    def isRecordOutdated(self, record):
+    def isRecordOutdated(self, record: Record):
         """
         Test record outdated.
         Returns bool value: True if record is outdated (can be removed).
@@ -78,57 +76,34 @@ class RecordsStorage():
             return True
         return False
 
-    def isRecordMatched(self, record, ownerId=None, recordId=None, customFunc=None):
-        """
-        Compare record with parameters:
-        - `ownerId`: string,
-        - `recordId`: string,
-        - `customFunc`: def or lambda with `record` parameter.
-        Returns bool value: True if the record meets the specified conditions.
-        """
-        #  if customFunc:
-        #      DEBUG(utils.getTrace(' customFunc specified'))
-        isFound = (bool(record) and (
-                (not ownerId or record.ownerId == ownerId)
-                and (not recordId or record.recordId == recordId)
-                and (not customFunc or bool(customFunc(record)))
-            )
-        )
-        #  DEBUG(utils.getTrace(' done'), {
-        #      'isFound': isFound,
-        #      'ownerId': ownerId,
-        #      'recordId': recordId,
-        #      'customFunc': customFunc,
-        #      'record': record,
-        #  })
-        return isFound
-
-    def processRecords(self, ownerId=None, recordId=None, customFunc=None, removeFound=False, removeOutdated=True):
+    def processRecords(self, findOptions: FindOptions = None, removeOptions: RemoveOptions = None):
         """
         Main low-level method for records finding and processing.
-        Found conditions specified with parameters (see `isRecordMatched`, all of them are optional):
+        Found conditions specified with parameters
+        (see `FindOptions`, `FindOptions.isRecordMatched`,
+        all of them are optional):
         - `ownerId`: string,
         - `recordId`: string,
         - `customFunc`: def or lambda with `record` parameter.
-        Remove parameters:
+        Remove parameters (see `RemoveOptions`):
         - `removeFound` -- Remove found records (default is False).
         - `removeOutdated` -- Remove outdated records (default is True).
         Returns tuple of `records`, `positions`: crsp found records and their positions in list.
         """
         #  DEBUG(utils.getTrace(' start'), {
         #      'recordsData': self.recordsData,
-        #      'ownerId': ownerId,
-        #      'recordId': recordId,
-        #      'customFunc': customFunc,
-        #      'removeFound': removeFound,
-        #      'removeOutdated': removeOutdated,
+        #      'ownerId': findOptions.ownerId,
+        #      'recordId': findOptions.recordId,
+        #      'customFunc': findOptions.customFunc,
+        #      'removeFound': removeOptions.removeFound,
+        #      'removeOutdated': removeOptions.removeOutdated,
         #  })
         records = []
         # Scan records in reversed order (removing records from list's tail)
         pos = len(self.recordsData) - 1
         while pos >= 0:
             record = self.recordsData[pos]
-            isFound = self.isRecordMatched(record, ownerId=ownerId, recordId=recordId, customFunc=customFunc)
+            isFound = bool(findOptions) and findOptions.isRecordMatched(record)
             if isFound:
                 #  DEBUG(utils.getTrace(' record found'), {
                 #      'pos': pos,
@@ -136,20 +111,23 @@ class RecordsStorage():
                 #  })
                 records.insert(0, record)  # Insert at begining of list ('coz scanning in reverse order)
             # Remove record if neede...
-            if (isFound and removeFound) or (removeOutdated and self.isRecordOutdated(record)):
-                #  DEBUG(utils.getTrace(' record removing'), {
-                #      'pos': pos,
-                #      'record': record,
-                #      'isFound': isFound,
-                #  })
-                del self.recordsData[pos]
+            if removeOptions:
+                if ((isFound and removeOptions.removeFound)
+                        or (removeOptions.removeOutdated and self.isRecordOutdated(record))
+                        ):
+                    #  DEBUG(utils.getTrace(' record removing'), {
+                    #      'pos': pos,
+                    #      'record': record,
+                    #      'isFound': isFound,
+                    #  })
+                    del self.recordsData[pos]
             pos = pos - 1
         #  DEBUG(utils.getTrace(' done'), {
         #      'records': records,
         #  })
         return records
 
-    def findRecords(self, ownerId=None, recordId=None, customFunc=None):
+    def findRecords(self, findOptions: FindOptions):
         """
         Find-only records with conditions (all parameters are optional):
         - `ownerId`: string,
@@ -157,9 +135,9 @@ class RecordsStorage():
         - `customFunc`: def or lambda with `record` parameter.
         Returns found records list.
         """
-        return self.processRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=False)
+        return self.processRecords(findOptions, RemoveOptions(removeFound=False))
 
-    def extractRecords(self, ownerId=None, recordId=None, customFunc=None):
+    def extractRecords(self, findOptions: FindOptions):
         """
         Find and remove records with conditions (all parameters are optional):
         - `ownerId`: string,
@@ -167,22 +145,22 @@ class RecordsStorage():
         - `customFunc`: def or lambda with `record` parameter.
         Returns found (and removed) records list.
         """
-        return self.processRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc, removeFound=True)
+        return self.processRecords(findOptions, RemoveOptions(removeFound=True))
 
-    def removeRecords(self, ownerId=None, recordId=None, customFunc=None):
+    def removeRecords(self, findOptions: FindOptions):
         """
         Remove records with conditions (all parameters are optional):
         - `ownerId`: string,
         - `recordId`: string,
         - `customFunc`: def or lambda with `record` parameter.
         """
-        self.extractRecords(ownerId=ownerId, recordId=recordId, customFunc=customFunc)
+        self.extractRecords(findOptions)
 
     def removeOutdatedRecords(self):
         """
         Remove outdated records.
         """
-        self.processRecords(removeOutdated=True)
+        self.processRecords(removeOptions=RemoveOptions(removeOutdated=True))
 
 
 __all__ = [  # Exporting objects...

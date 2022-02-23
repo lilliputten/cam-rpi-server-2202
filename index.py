@@ -22,7 +22,7 @@ rootPath = os.path.dirname(os.path.abspath(__file__))  # From index.wsgi
 sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server/
 
 # Start application...
-from src.server import app as application  # noqa
+from src.server import app as application  # noqa  # pylint: disable=wrong-import-position
 
 __all__ = [  # Exporting objects...
     'application',

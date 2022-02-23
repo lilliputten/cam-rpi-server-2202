@@ -2,13 +2,13 @@
 # @module Record
 # @desc Extendable (?) records storage engine
 # @since 2022.02.22, 01:47
-# @changed 2022.02.22, 02:03
+# @changed 2022.02.24, 00:34
 
 
 import time
 
-from src.lib.logger import DEBUG
-from src.lib import utils
+from src.core.lib.logger import DEBUG
+from src.core.lib import utils
 
 
 class Record():

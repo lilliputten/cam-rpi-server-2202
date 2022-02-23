@@ -4,8 +4,8 @@
 # @changed 2022.02.22, 01:47
 
 
-#  from src.lib.logger import DEBUG
-from src.lib import utils
+#  from src.core.lib.logger import DEBUG
+from src.core.lib import utils
 
 from .RecordsStorage import RecordsStorage
 

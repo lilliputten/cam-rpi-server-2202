@@ -3,15 +3,14 @@
 # @since 2022.02.07, 00:27
 # @changed 2022.02.12, 02:57
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-# from . import pathmagic  # noqa
-
 import os
 
 from config import config
 #  from .appSocketIO import appSocketIO
+
+from src.core.lib.logger import DEBUG
+
 from .app import app
-from src.lib.logger import DEBUG
 
 
 run_main = os.environ.get('WERKZEUG_RUN_MAIN')

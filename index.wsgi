@@ -22,7 +22,7 @@ with open(activate_this) as f:
 
 # Inject application path...
 rootPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(1, rootPath)
+sys.path.insert(1, rootPath)  # noqa  # pylint: disable=wrong-import-position
 
 # Start application...
 from src.server import app as application  # noqa

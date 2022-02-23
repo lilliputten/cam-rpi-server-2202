@@ -8,22 +8,21 @@
 # issues (gevent and eventlet cannot be correctly installed in shared apache
 # hosting).
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-# from . import pathmagic  # noqa
-
 from flask import Blueprint
 from flask import jsonify
 from flask import render_template
 from flask_socketio import send
 from flask_socketio import join_room
-from config import config
-from .appSocketIO import appSocketIO
 #  from flask import render_template
 #  from flask import redirect
 #  from flask import url_for
 #  from flask import request
 
-from src.lib.logger import DEBUG
+from config import config
+
+from src.core.lib.logger import DEBUG
+
+from .appSocketIO import appSocketIO
 
 
 blueprintSockets = Blueprint('blueprintSockets', __name__)
