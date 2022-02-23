@@ -58,7 +58,7 @@ echo -n "Starting daemon... " \
   --chdir "$ROOTDIR" \
   --pid="$PIDFILE" \
   --log-file="$LOGFILE" \
-  index \
+  gunicorn \
 && echo "Done." \
 && echo -n "Waiting for pid file ($PIDFILE)..." \
 && while ! test -f "$PIDFILE"; do echo -n " ." && sleep 1; done \
