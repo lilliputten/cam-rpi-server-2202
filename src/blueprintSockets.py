@@ -2,32 +2,30 @@
 # @module blueprintSockets
 # @desc Test camera shot api
 # @since 2022.02.12, 01:46
-# @changed 2022.02.12, 01:46
+# @changed 2022.02.14, 00:58
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
+# NOTE 2022.02.14, 00:57 -- Sockets is unused due to remote-server installation
+# issues (gevent and eventlet cannot be correctly installed in shared apache
+# hosting).
 
-from .app import app
 from flask import Blueprint
-#  from flask import render_template
 from flask import jsonify
-#  from flask import redirect
 from flask import render_template
+from flask_socketio import send
+from flask_socketio import join_room
+#  from flask import render_template
+#  from flask import redirect
 #  from flask import url_for
 #  from flask import request
-from flask_socketio import send
-from flask_socketio import SocketIO
-from flask_socketio import emit
-from flask_socketio import join_room
-from config import config
-from .appSocketIO import appSocketIO
 
-from .logger import DEBUG
+from config import config
+
+from src.core.lib.logger import DEBUG
+
+from .appSocketIO import appSocketIO
 
 
 blueprintSockets = Blueprint('blueprintSockets', __name__)
-
-#  appSocketIO = SocketIO(app, cors_allowed_origins="*")
 
 # NOTE: Logged twice with `* Restarting with stat` in dev mode
 DEBUG('@:blueprintSockets: starting', {

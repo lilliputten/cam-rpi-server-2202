@@ -82,7 +82,7 @@ config = {  # Default config
 
     # Path parameters...
 
-    'rootPath': rootPath,
+    'rootPath': rootPath,  # RO!
     'uploadPath': uploadPath,
 
     # Generated client path (see `cam-client-app-build`, TODO?)
@@ -117,7 +117,7 @@ config = {  # Default config
     'outputColoredLog': True,  # Use rich output log format with `termcolor`
     'writeLog': True,  # Write log to external file
     'clearLogFile': True,  # Clear log file at start
-    'logFileName': 'log.txt',  # Log file name
+    'logFileName': 'log.txt',  # Log file name (relative to `rootPath`!)
 
     # Datetime formats...
 

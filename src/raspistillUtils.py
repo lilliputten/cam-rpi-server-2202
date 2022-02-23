@@ -14,16 +14,10 @@ import traceback
 from os import path
 from flask import send_file
 
-#  Local imports workaround, @see https://stackoverflow.com/questions/36827962/pep8-import-not-at-top-of-file-with-sys-path
-from . import pathmagic  # noqa
-
 from config import config
 
-#  from config import config
-
-from .logger import DEBUG
-#  from .errors import * as errors
-from . import errors
+from src.core.lib.logger import DEBUG
+from src.core.lib import errors
 
 
 def sendImageFile(imgPath, mimeType='image/jpeg'):
@@ -45,10 +39,11 @@ def sendImageFile(imgPath, mimeType='image/jpeg'):
         'fileSize': int(fileSize),
     })
     return send_file(imgPath, mimetype=mimeType)
-    #  return render_template('viewImage.html', id=id, timestamp=timestamp, imageWidth=imageWidth, imageHeight=imageHeight, params=params)
+    # return render_template('viewImage.html', id=id, timestamp=timestamp,
+    # imageWidth=imageWidth, imageHeight=imageHeight, params=params)
 
 
-def makeShot(debug=False):
+def makeShot(debug=False):  # pylint: disable=too-many-locals # TODO: Refactor: Restructure into sub-functions.
     """
     Executes external shot command.
     Returns shot file name.
@@ -80,32 +75,32 @@ def makeShot(debug=False):
         'cmd': cmdStr,
     })
     try:
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        bStdout, bStderr = process.communicate()
-        sStdout = bStdout.decode('utf-8').strip()
-        sStderr = bStderr.decode('utf-8').strip()
-        DEBUG('raspistillUtils:execCmd: Execution success', {
-            'imgPath': imgPath,
-            'cmd': cmdStr,
-            #  'stdout': bStdout,
-            'stdout': sStdout,
-            'stderr': sStderr,
-        })
-        # Try to load image file...
-        if not path.isfile(imgPath):
-            errStr = 'No image file exists'
-            DEBUG('raspistillUtils:execCmd: ' + errStr, {
+        with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as process:
+            bStdout, bStderr = process.communicate()
+            sStdout = bStdout.decode('utf-8').strip()
+            sStderr = bStderr.decode('utf-8').strip()
+            DEBUG('raspistillUtils:execCmd: Execution success', {
                 'imgPath': imgPath,
+                'cmd': cmdStr,
+                #  'stdout': bStdout,
+                'stdout': sStdout,
+                'stderr': sStderr,
             })
-            raise Exception(errStr)
-        return imgPath
-        #  with open(imgPath, 'rb') as fh:
-        #      data = fh.read()
-        #      DEBUG('raspistillUtils:execCmd: Image data loaded', {
-        #          'imgPath': imgPath,
-        #          'size': len(data),
-        #      })
-        #      return data
+            # Try to load image file...
+            if not path.isfile(imgPath):
+                errStr = 'No image file exists'
+                DEBUG('raspistillUtils:execCmd: ' + errStr, {
+                    'imgPath': imgPath,
+                })
+                raise Exception(errStr)
+            return imgPath
+            #  with open(imgPath, 'rb') as fh:
+            #      data = fh.read()
+            #      DEBUG('raspistillUtils:execCmd: Image data loaded', {
+            #          'imgPath': imgPath,
+            #          'size': len(data),
+            #      })
+            #      return data
     except Exception as err:
         nErrno = err.errno if hasattr(err, 'errno') else None  # http response errno (if http error)
         sError = errors.toString(err, show_stacktrace=False)
@@ -121,7 +116,7 @@ def makeShot(debug=False):
         detailsDebug = ': cmd=`' + cmdStr + '`, imgPath=`' + imgPath + '`, error: ' + sError
         detailsReal = '.'
         errStr = 'Cannot execute camera shot command' + (detailsDebug if debug else detailsReal)
-        raise Exception(errStr)
+        raise Exception(errStr) from err
 
 
 __all__ = [  # Exporting objects...

@@ -10,15 +10,42 @@
       "request": "launch",
       "module": "flask",
       "env": {
-        "FLASK_APP": "server/server.py:app",
-        "FLASK_ENV": "development",
+        // NOTE: Default options are parsed from `.flaskenv` file
+        // "FLASK_APP": "src/server.py:app",
+        // "FLASK_ENV": "development",
         // "FLASK_DEBUG": "0",
       },
       "args": [
         "run",
         //  "--no-debugger",
-        ],
+      ],
       "jinja": true
+    },
+    {
+      "name": "All python tests",
+      "type": "python",
+      "request": "launch",
+      "module": "unittest",
+      "args": [
+        "discover", // Find all test modules
+        "-f", // Stop on first fail
+        "-t", ".", // Root project path
+        "-s", "src", // Search in path
+        "-p", "*_test.py", // Search pattern
+      ],
+    },
+    {
+      "name": "One python test",
+      "type": "python",
+      "request": "launch",
+      "module": "unittest",
+      "args": [
+        "-f", // Stop on first fail
+        // Specify python module path below...
+        "src/core/Records/RecordsStorage_test.py",
+        "-k", // Specify test match string below...
+        "test_removeOutdated",
+      ],
     },
     {
       "name": "Python: Current File",

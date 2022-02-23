@@ -5,13 +5,6 @@
 # @since 2019.03.28, 21:32
 # @changed 2022.02.07, 21:27
 
-# NOTE: Try to fix genvent/greenlet bug
-#  greenlet.error: cannot switch to a different thread
-#  gevent.hub.LoopExit: ('This operation would block forever', <Hub at 0x7f7ed4449508 epoll default pending=0>)
-#  @see [greenlet.error: cannot switch to a different thread · Issue #65 · miguelgrinberg/Flask-SocketIO](https://github.com/miguelgrinberg/Flask-SocketIO/issues/65)
-#  from gevent import monkey
-#  monkey.patch_all()
-
 import sys  # noqa
 import os  # noqa
 
@@ -28,11 +21,11 @@ with open(activate_this) as f:
 # TODO: Reuse `index.py`?
 
 # Inject application path...
-rootPath = os.path.dirname(os.path.abspath(__file__))  # From index.wsgi
-sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server/
+rootPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(1, rootPath)  # noqa  # pylint: disable=wrong-import-position
 
 # Start application...
-from server.server import app as application  # noqa
+from src.server import app as application  # noqa
 
 __all__ = [  # Exporting objects...
     'application',

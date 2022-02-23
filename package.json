@@ -1,11 +1,10 @@
 {
   "name": "cam-rpi-server-2202",
   "demo-server": "http://cam.lilliputten.ru/",
-  "version": "0.0.3",
-  "timetag": "220212-0302",
-  "timestamp": "2022.02.12, 03:02",
-  "changed": "2022.01.22, 19:55",
-  "changed": "2022.02.06, 23:10",
+  "version": "0.0.5",
+  "timetag": "220224-0055",
+  "timestamp": "2022.02.24, 00:55",
+  "changed": "2022.02.23, 23:11",
   "private": true,
   "author": "lilliputten <igor@lilliputten.ru>",
   "license": "MIT",
@@ -14,7 +13,9 @@
     "url": "git@github.com/lilliputten/cam-server"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "date-fns": "^2.28.0",
+    "eslint": "^8.9.0",
     "npm-package-user-scripts-list": "^0.1.10",
     "npm-run-all": "^4.1.5"
   },
@@ -25,6 +26,16 @@
     "increment-version": "echo --Increment patch version-- && node util-increment-version.js",
     "update-build-time": "echo --Update build timestamp-- && node util-update-build-time.js",
     "update-build-variables": "echo --Update build properties-- && sh util-update-build-variables.sh",
+    "flask": "echo --Run python flask server (venv required)-- && cross-env FLASK_APP=src/server.py:app FLASK_ENV=development flask run",
+    "pytests": "echo --Run python tests (unittest, venv required)-- && python -m unittest discover -f -t . -s src -p *_test.py",
+    "pylint-flake": "echo --Run python linter (flake8, venv required)-- && flake8 src",
+    "pylint": "echo --Run python linter (pylint, venv required)-- && pylint index.* src",
+    "pyformat": "echo --Run python formatter (autopep8, venv required)-- && autopep8 src",
+    "format": "echo --Run all formatters-- && npm-run-all pyformat",
+    "test": "echo --Run all tests-- && npm-run-all pytests",
+    "eslint": "echo --Run js linter (eslint)-- && npx eslint static/js/**.js",
+    "lint": "echo --Run all linters-- && npm-run-all pylint eslint",
+    "check-all": "echo --Run all formatters, linters and tests-- && npm-run-all format lint test",
     "help": "echo --List all available script commands-- && npm-package-user-scripts-list"
   }
 }
