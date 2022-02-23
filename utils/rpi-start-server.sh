@@ -60,7 +60,7 @@ echo -n "Starting daemon... " \
   --log-file="$LOGFILE" \
   index \
 && echo "Done." \
-&& echo -n "Waiting for pid file..." \
+&& echo -n "Waiting for pid file ($PIDFILE)..." \
 && while ! test -f "$PIDFILE"; do echo -n " ." && sleep 1; done \
 && echo " Got pid: `cat $PIDFILE`."
 
