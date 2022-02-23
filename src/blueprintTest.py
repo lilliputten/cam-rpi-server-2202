@@ -39,6 +39,7 @@ sharedVars = {
 }
 
 
+@blueprintTest.route('/')
 @blueprintTest.route('/<name>')
 def route_root(name=None):
     #  return '<p>Hello, World!</p>'
