@@ -2,7 +2,7 @@
 # @module rpi-start-server.sh
 # @desc Update/restart server on local device server (rpi).
 # @since 2022.02.07, 22:01
-# @changed 2022.02.08, 00:47
+# @changed 2022.02.24, 04:37
 #
 # Script may be called from command line directly or under crontab. See crrsp sections in README.md file.
 #
@@ -15,15 +15,15 @@ GUNICORN="/home/pi/.local/bin/gunicorn"
 
 # Determine real project path (is required for crontab execution)...
 REALFILE=`realpath "$0"`
-REALDIR=`dirname "$REALFILE"`
-ROOTDIR=`dirname "$REALDIR"`
+UTILSDIR=`dirname "$REALFILE"`
+ROOTDIR=`dirname "$UTILSDIR"`
 
 PIDFILE="$ROOTDIR/log-gunicorn.pid"
 LOGFILE="$ROOTDIR/log-gunicorn.log"
 
 # # Import config variables (expected variables `$DIST_REPO` and `$PUBLISH_FOLDER`)...
-# test -f "$REALDIR/utils/config.sh" && . "$REALDIR/utils/config.sh"
-# test -f "$REALDIR/utils/config-local.sh" && . "$REALDIR/utils/config-local.sh"
+# test -f "$UTILSDIR/config.sh" && . "$UTILSDIR/config.sh"
+# test -f "$UTILSDIR/config-local.sh" && . "$UTILSDIR/config-local.sh"
 
 echo "Starting server in folder: $ROOTDIR" # (via $REALFILE)"
 
@@ -58,7 +58,7 @@ echo -n "Starting daemon... " \
   --chdir "$ROOTDIR" \
   --pid="$PIDFILE" \
   --log-file="$LOGFILE" \
-  gunicorn \
+  index \
 && echo "Done." \
 && echo -n "Waiting for pid file ($PIDFILE)..." \
 && while ! test -f "$PIDFILE"; do echo -n " ." && sleep 1; done \

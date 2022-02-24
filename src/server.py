@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # @module server
 # @since 2022.02.07, 00:27
-# @changed 2022.02.12, 02:57
+# @changed 2022.02.24, 04:46
 
 import os
 
@@ -13,6 +13,7 @@ from src.core.lib.logger import DEBUG
 from .app import app
 
 
+# Try to avoid twice starting bug...
 run_main = os.environ.get('WERKZEUG_RUN_MAIN')
 isMain = run_main == 'true'
 doInit = not config['isDev'] or isMain
@@ -38,7 +39,10 @@ if doInit:  # NOTE: Initializing only once (avoiding double initialization with 
         'doInit': doInit,
         'isDev': config['isDev'],
         'isMain': isMain,
-        'env': config['env'],
+        'isGunicorn': config['isGunicorn'],
+        'isRPi': config['isRPi'],
+        'flaskEnv': config['flaskEnv'],
+        'gunicornEnv': config['gunicornEnv'],
         'run_main': run_main,
         #  'FLASK_ENV': os.getenv('FLASK_ENV'),
         'buildTag': config['buildTag'],

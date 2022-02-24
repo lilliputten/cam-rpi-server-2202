@@ -2,7 +2,7 @@
 # @module config
 # @desc Universal server & client config
 # @since 2022.02.06, 23:56
-# @changed 2022.02.12, 01:58
+# @changed 2022.02.24, 04:45
 # See:
 #  - https://docs.python.org/3/library/configparser.html -- ???
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
@@ -18,8 +18,11 @@ from config_helpers import updateConfigWithYaml, readFiletoString
 
 pythonVersion = sys.version
 
-env = os.getenv('FLASK_ENV')
-isDev = env == 'development'
+gunicornEnv = os.getenv('GUNICORN_ENV')
+flaskEnv = os.getenv('FLASK_ENV')
+isGunicorn = bool(gunicornEnv)
+isRPi = isGunicorn
+isDev = flaskEnv == 'development'
 isProd = not isDev
 
 rootPath = path.dirname(path.abspath(__file__))  # Project root path
@@ -70,7 +73,10 @@ config = {  # Default config
 
     # Application parameters...
 
-    'env': env,
+    'flaskEnv': flaskEnv,
+    'gunicornEnv': gunicornEnv,
+    'isGunicorn': isGunicorn,
+    'isRPi': isRPi,
     'isDev': isDev,
     'isProd': isProd,
 

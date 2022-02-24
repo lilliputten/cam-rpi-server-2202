@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=python:
-# @module index.wsgi
+# @module gunicorn.py
 # @desc Local server start script (for start with gunicorn; see `utils/rpi-start-server.sh`)
 # @since 2022.02.07, 21:30
-# @changed 2022.02.07, 21:30
+# @changed 2022.02.24, 04:44
 
 import sys
 import os
@@ -21,7 +21,7 @@ import os
 rootPath = os.path.dirname(os.path.abspath(__file__))  # From index.wsgi
 sys.path.insert(1, rootPath)  # /home/g/goldenjeru/lilliputten.ru/cam-rpi-server/
 
-os.environ['ON_GUNICORN'] = '1'
+os.environ['GUNICORN_ENV'] = 'default'
 
 # Start application...
 from src.server import app as application  # noqa  # pylint: disable=wrong-import-position
