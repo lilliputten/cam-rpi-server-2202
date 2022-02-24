@@ -1,0 +1,20 @@
+# vim: ft=systemd
+# @since 2022.02.07, 22:01
+# @changed 2022.02.24, 03:01
+
+[Unit]
+Description=Start gunicorn cam-rpi-server
+; After=multi-user.target
+After=network.target
+
+[Service]
+; ExecStart=/usr/bin/python3 /home/pi/ensure-file-exists.py
+User=pi
+WorkingDirectory=/home/pi/projects/cam-rpi-server/
+; Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
+; ExecStart=/home/sammy/myproject/myprojectenv/bin/gunicorn --workers 3 --bind unix:myproject.sock -m 007 wsgi:app
+; ExecStart=sh /home/pi/projects/cam-rpi-server/utils/rpi-start-server.sh
+ExecStart=/home/pi/.local/bin/gunicorn --reload -D -w 1 -b 0.0.0.0:4000 --pid="log-gunicorn.pid" --log-file="log-gunicorn.log" gunicorn
+
+[Install]
+WantedBy=multi-user.target
