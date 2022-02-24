@@ -1,5 +1,5 @@
 <!--
- @changed 2022.02.12, 03:54
+ @changed 2022.02.24, 04:22
 -->
 
 # Cam flask photo receiver server & raspberry camera client
@@ -123,6 +123,12 @@ crontab -e
 Show crontab:
 ```shell
 crontab -l
+```
+
+Automatically add server start command to crontab with:
+
+```shell
+sh utils/rpi-gunicorn-server-create-crontab-entry.sh
 ```
 
 See also:

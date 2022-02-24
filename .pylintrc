@@ -74,6 +74,7 @@ disable=
   missing-class-docstring,
   missing-function-docstring,
   too-few-public-methods,
+  redefined-outer-name,
 
 #   print-statement,
 #   parameter-unpacking,

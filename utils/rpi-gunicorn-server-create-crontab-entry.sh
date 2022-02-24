@@ -2,7 +2,7 @@
 # @module rpi-gunicorn-server-create-crontab-entry
 # @desc Create crontab entry for automatic start of guncorn server (rpi).
 # @since 2022.02.24, 03:52
-# @changed 2022.02.24, 04:13
+# @changed 2022.02.24, 04:23
 #
 # @see https://stackoverflow.com/questions/610839/how-can-i-programmatically-create-a-new-cron-job
 
@@ -17,9 +17,9 @@ UTILCMDNAME="rpi-start-server.sh"
 UTILCMD_LINE="@reboot sh $UTILDIR/$UTILCMDNAME"
 
 # Reading current crontab content (m.b. `2>&1`) skipping 'no crontab' and previous lines with `UTILCMDNAME`...
-CURRENT_CRONTAB=`crontab -l \
+CURRENT_CRONTAB=`$CRONTABCMD -l \
   | sed "s/no crontab for $(whoami)//" \
-  | sed -z "s/[^\n]*$UTILCMDNAME[^\n]*\n//g"
+  | sed -z "s/[^\n]*$UTILCMDNAME[^\n]*\n//g" \
 `
 
 # # DEBUG
