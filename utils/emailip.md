@@ -34,7 +34,7 @@ FromLineOverride=YES
 Test send mail command (?):
 
 ```
-echo "hello" | mail s "test subject" lilliputten@yandex.ru
+echo "hello" | mail -s "test subject" lilliputten@yandex.ru
 ```
 
 See also:
