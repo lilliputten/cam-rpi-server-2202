@@ -8,6 +8,31 @@ import traceback
 import re
 
 
+def quoteStr(s, addQuotes=False, quoteDouble=False, quoteSingle=True):
+    """
+    s (str) -- Source string parameter.
+    Options:
+    - addQuotes (bool|str) -- Add quotes around result string (default: False, don't quote).
+    - quoteSingle (bool) -- Quote single quotes ('), default is True.
+    - quoteDouble (bool) -- Quote double quotes ("), default is False.
+    Returns string.
+    """
+    if not isinstance(s, str):  # type(s) != str:
+        if s is None:
+            s = ''
+        else:
+            s = str(s)
+    if quoteDouble:
+        s = s.replace('"', '\\"')
+    if quoteSingle:
+        s = s.replace('\'', '\\\'')
+    if addQuotes:
+        if addQuotes is True:
+            addQuotes = "'"
+        s = addQuotes + s + addQuotes
+    return s
+
+
 def dictFromClass(cls):
     return dict(
         (key, value)
@@ -55,9 +80,10 @@ def getTrace(appendStr=None):
     return traceResult
 
 
-__all__ = [  # Exporting objects...
-    'dictFromClass',
-    'truncateLongString',
-    'prepareLongString',
-    'getTrace',
-]
+#  __all__ = [  # Exporting objects...
+#      'quoteStr',
+#      'dictFromClass',
+#      'truncateLongString',
+#      'prepareLongString',
+#      'getTrace',
+#  ]

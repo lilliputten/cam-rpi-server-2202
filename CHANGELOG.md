@@ -1,9 +1,10 @@
 <!--
-@changed 2022.02.24, 00:55
+@changed 2022.02.26, 05:31
 -->
 
 # Changelog
 
+- 2022.02.26, 05:31 -- Using TinyDB for data engine in `RecordsStorage` (in progress: basic methods and tests are ready).
 - 2022.02.24, 00:55 -- v.0.0.5: Moved `lib` to `core/lib` scope (extract to shared submodule in future). Using pylint as project-wide linter (fixed all linter issues).
 - 2022.02.23, 00:24 -- RecordsStorage: remove outdated records during findng (in `processRecords`), added metod for rorced remove of outdated records (`removeOutdatedRecords`).
 - 2022.02.22, 02:30 -- RecordsStorage, Record: Basic records and records storage routines and tests.

@@ -13,6 +13,8 @@ import time
 import unittest
 import functools
 
+from tinydb import Query
+
 from src.core.lib import utils
 
 from .RecordsStorage import RecordsStorage
@@ -26,7 +28,7 @@ print('\nRunning tests for', utils.getTrace())
 
 relevanceTime = 10
 
-recordsStorage = RecordsStorage(relevanceTime)
+recordsStorage = RecordsStorage(relevanceTime, useMemoryStorage=True)
 
 
 class Test_recordsStorage(unittest.TestCase):
@@ -39,6 +41,14 @@ class Test_recordsStorage(unittest.TestCase):
         """
         #  recordsStorage.recordsData = []
         recordsStorage.clearRecordsData()
+
+    #  def test_openDb(self):
+    #      """
+    #      Test open db.
+    #      """
+    #      print('\nRunning test', utils.getTrace())
+    #      dbCur = recordsStorage.openDbCursor()
+    #      self.assertTrue(bool(dbCur))
 
     def test_emptyData(self):
         """
@@ -54,8 +64,10 @@ class Test_recordsStorage(unittest.TestCase):
         """
         print('\nRunning test', utils.getTrace())
         recordsStorage.addRecordFromData(ownerId='test', data={'value': 'new record'})
+        recordsStorage.dbSave()
         #  self.assertEqual(len(recordsStorage.recordsData), 1)
-        self.assertEqual(recordsStorage.getRecordsCount(), 1)
+        recordsCount = recordsStorage.getRecordsCount()
+        self.assertEqual(recordsCount, 1)
 
     def test_removeOutdated(self):
         """
@@ -64,7 +76,8 @@ class Test_recordsStorage(unittest.TestCase):
         print('\nRunning test', utils.getTrace())
         timestamp = time.time() - relevanceTime  # Add 'obsolete' record
         recordsStorage.addRecordFromData(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
-        recordsStorage.removeOutdatedRecords()  # Expilitly remove outdated records.
+        removedRecorsCount = recordsStorage.removeOutdatedRecords()  # Expilitly remove outdated records.
+        self.assertEqual(removedRecorsCount, 1)
         recordsCount = recordsStorage.getRecordsCount()
         self.assertEqual(recordsCount, 0)
 
@@ -76,36 +89,37 @@ class Test_recordsStorage(unittest.TestCase):
         timestamp = time.time() - relevanceTime  # Add 'obsolete' record
         recordsStorage.addRecordFromData(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
         # Try to find absent records. Outdated records must be removed.
-        recordsStorage.findRecords(FindOptions(ownerId='ABSENT'))
+        recordsStorage.findRecordsUsingFragment({'ownerId': 'ABSENT'})
         recordsCount = recordsStorage.getRecordsCount()
         self.assertEqual(recordsCount, 0)
 
-    def test_getRecords(self):
+    def test_findRecords(self):
         """
         Test of getting of records by parameter (`ownerId`).
         """
         print('\nRunning test', utils.getTrace())
         recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found'})
         recordsStorage.addRecordFromData(ownerId='other', data={'value': 222})
-        foundRecords = recordsStorage.findRecords(FindOptions(ownerId='test'))
+        foundRecords = recordsStorage.findRecordsUsingFragment({'ownerId': 'test'})
         self.assertEqual(len(foundRecords), 1)
 
-    def test_getRecordsWithCustomFunc(self):
+    def test_findRecordsWithCustomFunc(self):
         """
         Test of getting of records by custom comparator funciton.
         """
         print('\nRunning test', utils.getTrace())
-        # NOTE: Compare function can be specified as lambda or def
-
-        def customFunc(record):
-            return record.data['value'] == 'must be found'  # noqa: E731  # use def instead lambda
-        #  def customFunc(record):  # noqa: E306  # blank line
-        #      isFound = record.data['value'] == 'must be found'
-        #      return isFound
         recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found'})
         recordsStorage.addRecordFromData(ownerId='other', data={'value': 222})
-        foundRecords = recordsStorage.findRecords(FindOptions(customFunc=customFunc))
-        self.assertEqual(len(foundRecords), 1)
+        def customFunc(data, value):
+            return data['value'] == value  # noqa: E731  # use def instead lambda
+        #  findOptions = FindOptions(customFunc=customFunc)
+        #  foundRecords = recordsStorage.findRecordsUsingFragment(findOptions)
+        with recordsStorage.getDbHandler() as db:
+            if db is not None:
+                Test = Query()
+                foundRecords = db.search(Test.data.test(customFunc, 'must be found'))
+                foundRecordsCount = len(foundRecords)
+                self.assertEqual(foundRecordsCount, 1)
 
     def test_removeRecords(self):
         """

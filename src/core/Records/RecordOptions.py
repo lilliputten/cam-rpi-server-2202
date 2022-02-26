@@ -54,6 +54,18 @@ class FindOptions():
         #  })
         return isFound
 
+    def getQueryFragment(self):
+        """
+        Get fragment object for tinydb query search
+        @see https://tinydb.readthedocs.io/en/latest/usage.html#advanced-queries
+        """
+        frag = {}
+        if self.ownerId is not None:
+            frag['ownerId'] = self.ownerId
+        if self.recordId is not None:
+            frag['recordId'] = self.recordId
+        return frag
+
 
 class RemoveOptions():  # pylint: disable=too-few-public-methods
 

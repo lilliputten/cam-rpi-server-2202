@@ -44,7 +44,7 @@
         // Specify python module path below...
         "src/core/Records/RecordsStorage_test.py",
         "-k", // Specify test match string below...
-        "test_removeOutdated",
+        "test_findRecords",
       ],
     },
     {

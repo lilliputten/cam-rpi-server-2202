@@ -2,7 +2,7 @@
 # @module config
 # @desc Universal server & client config
 # @since 2022.02.06, 23:56
-# @changed 2022.02.24, 04:45
+# @changed 2022.02.26, 02:34
 # See:
 #  - https://docs.python.org/3/library/configparser.html -- ???
 #  - https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
@@ -133,6 +133,11 @@ config = {  # Default config
     'preciseDateFormat': '%Y.%m.%d-%H:%M:%S',  # eg: '2022.02.08-02:04:23'
     'logDateFormat': '%y%m%d-%H%M%S-%f',  # eg: '220208-020423-255157'
     'detailedDateFormat': '%Y.%m.%d-%H:%M:%S.%f',  # eg: '2022.02.08-02:04:23.255157'
+
+    # Databases...
+
+    'dbPath': path.join(rootPath, 'db'),
+    'dbExt': '.db',  # sqlite3 database file extensions
 
 }
 
