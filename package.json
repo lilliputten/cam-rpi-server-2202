@@ -29,7 +29,7 @@
     "flask": "echo --Run python flask server (venv required)-- && cross-env FLASK_APP=src/server.py:app FLASK_ENV=development flask run",
     "pytests": "echo --Run python tests (unittest, venv required)-- && python -m unittest discover -f -t . -s src -p *_test.py",
     "pylint-flake": "echo --Run python linter (flake8, venv required)-- && flake8 src",
-    "pylint": "echo --Run python linter (pylint, venv required)-- && pylint index.* src",
+    "pylint": "echo --Run python linter (pylint, venv required)-- && pylint index.py index.wsgi src",
     "pyformat": "echo --Run python formatter (autopep8, venv required)-- && autopep8 src",
     "format": "echo --Run all formatters-- && npm-run-all pyformat",
     "test": "echo --Run all tests-- && npm-run-all pytests",

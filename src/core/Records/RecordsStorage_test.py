@@ -18,9 +18,6 @@ from tinydb import Query
 from src.core.lib import utils
 
 from .RecordsStorage import RecordsStorage
-from .RecordOptions import FindOptions
-#  from .RecordOptions import RemoveOptions
-#  from . import FindOptions
 
 
 print('\nRunning tests for', utils.getTrace())
@@ -39,7 +36,6 @@ class Test_recordsStorage(unittest.TestCase):
         """
         Made cleanups after each test
         """
-        #  recordsStorage.recordsData = []
         recordsStorage.clearRecordsData()
 
     #  def test_openDb(self):
@@ -55,7 +51,6 @@ class Test_recordsStorage(unittest.TestCase):
         Test initial (empty) state.
         """
         print('\nRunning test', utils.getTrace())
-        #  self.assertEqual(recordsStorage.recordsData, [])
         self.assertEqual(recordsStorage.getRecordsCount(), 0)
 
     def test_addedRecord(self):
@@ -63,9 +58,8 @@ class Test_recordsStorage(unittest.TestCase):
         Test of data record adding.
         """
         print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'new record'})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'new record'})
         recordsStorage.dbSave()
-        #  self.assertEqual(len(recordsStorage.recordsData), 1)
         recordsCount = recordsStorage.getRecordsCount()
         self.assertEqual(recordsCount, 1)
 
@@ -75,21 +69,9 @@ class Test_recordsStorage(unittest.TestCase):
         """
         print('\nRunning test', utils.getTrace())
         timestamp = time.time() - relevanceTime  # Add 'obsolete' record
-        recordsStorage.addRecordFromData(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
+        recordsStorage.addRecord(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
         removedRecorsCount = recordsStorage.removeOutdatedRecords()  # Expilitly remove outdated records.
         self.assertEqual(removedRecorsCount, 1)
-        recordsCount = recordsStorage.getRecordsCount()
-        self.assertEqual(recordsCount, 0)
-
-    def test_removeOutdatedDuringFind(self):
-        """
-        Test of implicitly (during find) removing outdated records.
-        """
-        print('\nRunning test', utils.getTrace())
-        timestamp = time.time() - relevanceTime  # Add 'obsolete' record
-        recordsStorage.addRecordFromData(timestamp=timestamp, ownerId='test', data={'value': 'must be removed'})
-        # Try to find absent records. Outdated records must be removed.
-        recordsStorage.findRecordsUsingFragment({'ownerId': 'ABSENT'})
         recordsCount = recordsStorage.getRecordsCount()
         self.assertEqual(recordsCount, 0)
 
@@ -98,9 +80,9 @@ class Test_recordsStorage(unittest.TestCase):
         Test of getting of records by parameter (`ownerId`).
         """
         print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 222})
-        foundRecords = recordsStorage.findRecordsUsingFragment({'ownerId': 'test'})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 222})
+        foundRecords = recordsStorage.findRecords({'ownerId': 'test'})
         self.assertEqual(len(foundRecords), 1)
 
     def test_findRecordsWithCustomFunc(self):
@@ -108,12 +90,10 @@ class Test_recordsStorage(unittest.TestCase):
         Test of getting of records by custom comparator funciton.
         """
         print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 222})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 222})
         def customFunc(data, value):
             return data['value'] == value  # noqa: E731  # use def instead lambda
-        #  findOptions = FindOptions(customFunc=customFunc)
-        #  foundRecords = recordsStorage.findRecordsUsingFragment(findOptions)
         with recordsStorage.getDbHandler() as db:
             if db is not None:
                 Test = Query()
@@ -126,11 +106,11 @@ class Test_recordsStorage(unittest.TestCase):
         Test of removing of records by parameters (`ownerId`).
         """
         print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 'must be remained'})
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 'must be remained'})
-        recordsStorage.removeRecords(FindOptions(ownerId='test'))
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        recordsStorage.removeRecords({'ownerId': 'test'})
         remainedRecordsCount = recordsStorage.getRecordsCount()
         self.assertEqual(remainedRecordsCount, 2)
 
@@ -139,16 +119,16 @@ class Test_recordsStorage(unittest.TestCase):
         Test of extracing (finding & removing) of records by parameters (`ownerId`).
         """
         print('\nRunning test', utils.getTrace())
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 'must be remained'})
-        recordsStorage.addRecordFromData(ownerId='test', data={'value': 'must be found and removed'})
-        recordsStorage.addRecordFromData(ownerId='other', data={'value': 'must be remained'})
-        removedRecords = recordsStorage.extractRecords(FindOptions(ownerId='test'))
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        recordsStorage.addRecord(ownerId='test', data={'value': 'must be found and removed'})
+        recordsStorage.addRecord(ownerId='other', data={'value': 'must be remained'})
+        removedRecords = recordsStorage.extractRecords({'ownerId': 'test'})
         # Check removed records...
         # 2 records must be removed...
         self.assertEqual(len(removedRecords), 2)
         # Check which records was removed...
-        removedRecordsValues = list(map(lambda record: record.data['value'], removedRecords))
+        removedRecordsValues = list(map(lambda record: record['data']['value'], removedRecords))
         removedRecordsTest = functools.reduce(
             (lambda result, value: result and value == 'must be found and removed'), removedRecordsValues, True)
         self.assertEqual(removedRecordsTest, True)
@@ -158,7 +138,7 @@ class Test_recordsStorage(unittest.TestCase):
         self.assertEqual(remainedRecordsCount, 2)
         # Check which records was removed...
         remainedRecords = recordsStorage.getRecordsData()
-        remainedRecordsValues = list(map(lambda record: record.data['value'], remainedRecords))
+        remainedRecordsValues = list(map(lambda record: record['data']['value'], remainedRecords))
         remainedRecordsTest = functools.reduce(
             (lambda result, value: result and value == 'must be remained'), remainedRecordsValues, True)
         self.assertEqual(remainedRecordsTest, True)

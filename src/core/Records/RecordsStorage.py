@@ -13,7 +13,7 @@ from os import path
 
 #  import sqlite3
 
-# https://tinydb.readthedocs.io/en/latest/usage.html
+# TinyDB. @see: https://tinydb.readthedocs.io/en/latest/usage.html
 from tinydb import TinyDB
 from tinydb import Query
 #  from tinydb import where
@@ -28,10 +28,6 @@ from src.core.lib.logger import DEBUG
 from src.core.lib.utils import getTrace
 #  from src.core.lib.utils import quoteStr
 #  from src.core.lib import errors
-
-from .Record import Record
-from .RecordOptions import FindOptions, RemoveOptions
-#  from . import RecordOptions
 
 
 #  #  Determine running under test suite...
@@ -167,88 +163,38 @@ class RecordsStorage():
         return 0
         #  return len(self.recordsData)
 
-    def addRecordObject(self, record: Record):
+    def addRecord(self, timestamp=None, ownerId=None, recordId=None, data=None):
         """
-        Add record with `Record` object instance.
-        """
-        dbData = {
-            'timestamp': record.timestamp,
-            'ownerId': record.ownerId,
-            'recordId': record.recordId,
-            'data': record.data,
-            #  'db': db,
-        }
-        DEBUG(getTrace(), {
-            'dbData': dbData,
-            #  'jsonData': jsonData,
-            'record': record,
-        })
-        try:
-            #  self.recordsData.append(record)
-            with self.getDbHandler() as db:
-                if db is not None:
-                    db.insert(dbData)
-            #  dbCur = self.openDbCursor()
-            #  # TODO: Check for cursor successfully created
-            #  jsonData = json.dumps(record.data) if record.data else '{}'
-            #  dbCmd = (
-            #      'insert into ' + dbName + ' values ('
-            #      + quoteStr(record.timestamp) + ', '
-            #      + quoteStr(record.ownerId, addQuotes=True) + ', '
-            #      + quoteStr(record.recordId, addQuotes=True) + ', '
-            #      + quoteStr(jsonData, addQuotes=True)
-            #      + ')'
-            #  )
-            #  DEBUG(getTrace(), {
-            #      'dbCmd': dbCmd,
-            #      'jsonData': jsonData,
-            #      'record': record,
-            #  })
-            #  dbCur.execute(dbCmd)
-        except Exception as err:
-            #  sError = errors.toString(err, show_stacktrace=False)
-            sTraceback = str(traceback.format_exc())
-            DEBUG(getTrace('catched error'), {
-                #  'dbCmd': dbCmd,
-                'dbData': dbData,
-                'err': err,
-                #  'error': sError,
-                'traceback': sTraceback,
-            })
-            #  errStr = 'Cannot add record'
-            #  #  errStr = 'Cannot execute db command: ' + dbCmd
-            #  raise Exception(errStr) from err
-            raise err
-        return True
-
-    def addRecordFromData(self, timestamp=None, ownerId=None, recordId=None, data=None):
-        """
-        Add record with raw data (all parameters are optional).
-        The data converting to `Record` object instance (see `addRecordObject` above):
+        Add record with params:
         - timestamp (number)
         - ownerId (string)
         - recordId (string)
         - data (dict)
         """
-        record = Record(timestamp=timestamp, ownerId=ownerId, recordId=recordId, data=data)
-        #  DEBUG(getTrace(), {
-        #      #  'timestamp': timestamp,
-        #      #  'ownerId': ownerId,
-        #      #  'recordId': recordId,
-        #      #  'data': data,
-        #      'record': record,
-        #  })
-        return self.addRecordObject(record)
-
-    def isRecordOutdated(self, record: Record):
-        """
-        Test record outdated.
-        Returns bool value: True if record is outdated (can be removed).
-        TODO: To use `Record.isOutdated`?
-        """
-        if not record or not record.timestamp or (time.time() - record.timestamp) >= self.relevanceTime:
-            return True
-        return False
+        dbData = {
+            'timestamp': timestamp,
+            'ownerId': ownerId,
+            'recordId': recordId,
+            'data': data,
+        }
+        DEBUG(getTrace(), {
+            'dbData': dbData,
+        })
+        try:
+            with self.getDbHandler() as db:
+                if db is not None:
+                    db.insert(dbData)
+        except Exception as err:
+            sTraceback = str(traceback.format_exc())
+            DEBUG(getTrace('catched error'), {
+                'dbData': dbData,
+                'err': err,
+                'traceback': sTraceback,
+            })
+            #  #  errStr = 'Cannot execute db command: ' + dbCmd
+            #  raise Exception(errStr) from err
+            raise err
+        return True
 
     def findOutdatedRecords(self):
         """
@@ -260,15 +206,12 @@ class RecordsStorage():
                 Test = Query()
                 result = db.search(Test.timestamp <= validTime)
                 print(result)
-            else:
-                print("No db")
 
     def removeOutdatedRecords(self):
         """
         Remove outdated records.
         Return removed records count.
         """
-        #  self.processRecords(removeOptions=RemoveOptions(removeOutdated=True))
         with self.getDbHandler() as db:
             if db is not None:
                 validTime = time.time() - self.relevanceTime
@@ -280,59 +223,7 @@ class RecordsStorage():
                 return len(result)
         return 0
 
-
-    def processRecords(self, findOptions: FindOptions = None, removeOptions: RemoveOptions = None):
-        """
-        Main low-level method for records finding and processing.
-        Found conditions specified with parameters
-        (see `FindOptions`, `FindOptions.isRecordMatched`,
-        all of them are optional):
-        - `ownerId`: string,
-        - `recordId`: string,
-        - `customFunc`: def or lambda with `record` parameter.
-        Remove parameters (see `RemoveOptions`):
-        - `removeFound` -- Remove found records (default is False).
-        - `removeOutdated` -- Remove outdated records (default is True).
-        Returns tuple of `records`, `positions`: crsp found records and their positions in list.
-        """
-        #  DEBUG(getTrace(' start'), {
-        #      'recordsData': self.recordsData,
-        #      'ownerId': findOptions.ownerId,
-        #      'recordId': findOptions.recordId,
-        #      'customFunc': findOptions.customFunc,
-        #      'removeFound': removeOptions.removeFound,
-        #      'removeOutdated': removeOptions.removeOutdated,
-        #  })
-        records = []
-        # Scan records in reversed order (removing records from list's tail)
-        pos = len(self.recordsData) - 1
-        while pos >= 0:
-            record = self.recordsData[pos]
-            isFound = bool(findOptions) and findOptions.isRecordMatched(record)
-            if isFound:
-                #  DEBUG(getTrace(' record found'), {
-                #      'pos': pos,
-                #      'record': record,
-                #  })
-                records.insert(0, record)  # Insert at begining of list ('coz scanning in reverse order)
-            # Remove record if neede...
-            if removeOptions:
-                if ((isFound and removeOptions.removeFound)
-                        or (removeOptions.removeOutdated and self.isRecordOutdated(record))
-                        ):
-                    #  DEBUG(getTrace(' record removing'), {
-                    #      'pos': pos,
-                    #      'record': record,
-                    #      'isFound': isFound,
-                    #  })
-                    del self.recordsData[pos]
-            pos = pos - 1
-        #  DEBUG(getTrace(' done'), {
-        #      'records': records,
-        #  })
-        return records
-
-    def findRecordsUsingFragment(self, fragment):
+    def findRecords(self, fragment):
         """
         `fragment`: data object with params:
         - `ownerId`: string,
@@ -340,7 +231,7 @@ class RecordsStorage():
         Returns found records list.
         """
         with self.getDbHandler() as db:
-            if db is not None:
+            if fragment and db is not None:
                 try:
                     return db.search(Query().fragment(fragment))
                 except Exception as err:
@@ -352,25 +243,29 @@ class RecordsStorage():
                     raise err
         return []
 
-    def extractRecords(self, findOptions: FindOptions):
+    def extractRecords(self, fragment):
         """
-        Find and remove records with conditions (all parameters are optional):
+        Find and remove records using fragment (all parameters are optional):
         - `ownerId`: string,
         - `recordId`: string,
-        - `customFunc`: def or lambda with `record` parameter.
         Returns found (and removed) records list.
         """
-        return self.processRecords(findOptions, RemoveOptions(removeFound=True))
+        records = self.findRecords(fragment)
+        # Remove records
+        if len(records):
+            with self.getDbHandler() as db:
+                if db is not None:
+                    ids = list(map(lambda rec: rec.doc_id, records))
+                    db.remove(doc_ids=ids)
+        return records
 
-    def removeRecords(self, findOptions: FindOptions):
+    def removeRecords(self, fragment):
         """
-        Remove records with conditions (all parameters are optional):
+        Remove records using fragment (all parameters are optional):
         - `ownerId`: string,
         - `recordId`: string,
-        - `customFunc`: def or lambda with `record` parameter.
         """
-        self.extractRecords(findOptions)
-
+        self.extractRecords(fragment)
 
 __all__ = [  # Exporting objects...
     'defaultRelevanceTime',
