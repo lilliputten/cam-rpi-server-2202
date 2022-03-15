@@ -10,8 +10,8 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     <!-- Bootstrap css assets... -->
-    <link rel="stylesheet"  {% if 'FLASK_ENV'|getenv == 'development' %}href="{{ url_for('static', filename='local-cdn/bootstrap/4.5.2/css/bootstrap.css') }}"{% else %}href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"{% endif %} />
-    <link rel="stylesheet"  {% if 'FLASK_ENV'|getenv == 'development' %}href="{{ url_for('static', filename='local-cdn/font-awesome/4.7.0/css/font-awesome.css') }}"{% else %}href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"{% endif %} />
+    <link rel="stylesheet" {% if 'FLASK_ENV'|getenv == 'development' %}href="{{ url_for('static', filename='local-cdn/bootstrap/4.5.2/css/bootstrap.css') }}"{% else %}href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"{% endif %} />
+    <link rel="stylesheet" {% if 'FLASK_ENV'|getenv == 'development' %}href="{{ url_for('static', filename='local-cdn/font-awesome/4.7.0/css/font-awesome.css') }}"{% else %}href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"{% endif %} />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <!--
     <link rel="stylesheet" href="/flask-static/styles.css">
